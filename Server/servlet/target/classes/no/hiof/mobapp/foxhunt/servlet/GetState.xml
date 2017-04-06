@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<game>
+<msg wicket:id="msg" />
+<gameObjects>
+<gameObject wicket:id="gameObject" />
+</gameObjects>
+</game>

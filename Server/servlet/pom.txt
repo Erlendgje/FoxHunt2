@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Min Webside</title>
+	<link rel="stylesheet" href="index.css">
+	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-56117424-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+	<div id="big_wrapper">
+		<header id="top_header">
+			<h1>Dette er min webside!</h1>
+		</header>
+		
+		<nav id="top_menu">
+			<ul>
+				<li><a href="index.html" class="link">Nyheter</a></li>
+				<li><a href="om_meg.html" class ="link">Om meg</a></li>
+				<li id="sub_menu" class="link">Prosjekter
+				<ul>
+					<li><a href="grit.html" class="link">Grunnleggende IT</a></li>
+					<li><a href="webutvikling.html" class="link">Webutvikling</a></li>
+					<li><a href="programmering.html" class="link">Programmering</a></li>
+				</ul>
+				</li>
+				<li><a href="kontakt.html" class="link">Kontakt</a></li>
+			</ul>
+		</nav>
+		
+		<div id="new_div">
+		
+			<section id="main_section">
+			<h2 class="dots">Oblig 4</h2>
+				<article>
+					<div>
+						<p>Vi fikk i oppgave å lage hva vi ville :D</p>
+						</br>
+						<p>Tanken bak spillet er egentlig bare at jeg ville lage et spill så jeg lagde fire på rad 2 player med power ups, power ups er markert med ett "?" og det er fire forskjellige typer: </br></br>
+						<ol>
+							<li>Explosion: fjerner alle brikker rundt eksplosjonen</li>
+							<li>Darkness: Gjør så neste spiller ikke kan se brettet på en runde</li>
+							<li>Switch: Alle gule blir røde og alle røde blir gule, hvis rød vinner når han/hun plaserer brikken på en switch vinner gul</li>
+							<li>Reverse: Istede for at alle brikkene stabler seg oppover stabler de seg nedover</li></br>
+							jeg føler at jeg fikk med alt, om ikke mer enn hva et fire på rad spill trenger
+						</p></br>
+						<button onClick="restart()">Nytt spill</button>
+						</br>
+						<canvas id="game" style="border:1px solid #d3d3d3;" height="500" width="500" background="red"> Your browser does not support the HTML5 canvas tag.</canvas>
+						</br>
+						<p id="vic"></p>
+						<script>
+							
+							//oppretter variabler og tilgang til canvas
+							var canvas = document.getElementById("game");
+							var inCanvas = canvas.getContext("2d");
+							//array for powerUp funksjonene og for brettet
+							var fourInARow = [];
+							var powerUp = [Explosion, darkness, switchere, reverse];
+							//setter player1 starter
+							var player1 = true;
+							var victoryRed  = [0, 0, 0, 0, 0, 0];
+							var victoryYellow  = [0, 0, 0, 0, 0, 0];
+							
+							//setter onclick listener til canvas (vet kake er ett dårlig navn men kom ikke på noe bedre :P)
+							canvas.onclick = kake;
+							
+							//variabler for power ups
+							var power = false;
+							var darknessActive = false;
+							var reverseActive = false;
+							
+							
+							
+							
+							
+							//starter funksjonen for å tegne brettet
+							startMap();
+							
+							//funksjon som tegner brettet
+							function startMap()
+							{
+								//for løkke for å fylle ut array som holder på verdiene om en rute er blank, powerup, rød eller gul
+								for(i = 0; i < 8; i++)
+								{
+									// lager array som skal inn i hovedarray slik at hovedarray blir 8*8
+									var row = [];
+									for(e = 0; e < 8; e++)
+									{
+										//setter slik at en rute inneholder powerup hvis power = random fra 0-8
+										var power = Math.floor(Math.random()*8);
+										if(power == e)
+										{
+											row[e] = "power";
+										}
+										else
+										{
+											row[e] = "blank";
+										}
+										
+										//lager sirkler utifra hvilken verdi de har i arrayet
+										//kaller på funksjonen "sircle" og fyller inn verdiene "sircle" trenger
+										if(row[e] == "blank")
+										{
+											sircle(55*(e+1), 55*(i+1), "white", false);
+										}
+										else if(row[e] == "power")
+										{
+											sircle(55*(e+1), 55*(i+1), "white", true);
+										}
+										else if(row[e] == "red")
+										{
+											sircle(55*(e+1), 55*(i+1), "red", false);
+										}
+										else
+										{
+											sircle(55*(e+1), 55*(i+1), "yellow", false);
+										}
+									}
+									//dytter row inn i hovedarray
+									fourInARow.push(row);
+								}
+							}
+							
+							
+							
+							
+							
+							
+							//funksjon for å tegne sirklene, motar xy verdier, farge og om den inneholder en powerup
+							function sircle(x, y, color, power)
+							{
+								inCanvas.beginPath();
+								inCanvas.arc(x,y,25,0,2*Math.PI);
+								inCanvas.lineWidth = 1;
+								inCanvas.stroke();
+								inCanvas.fillStyle = color;
+								inCanvas.fill();
+								
+								//hvis den inneholder en powerup skriver den inne ett "
+								if(power == true)
+								{
+									inCanvas.font = "30px Arial";
+									inCanvas.fillStyle = "black";
+									inCanvas.fillText("?",(x-7),(y+7));
+								}
+							}
+							
+							
+							
+							
+							
+							
+							//function kake er hva som skjer når du trykker på canvas
+							function kake(event){
+								
+								//finner først ut x posisjonen til musa da den ble trykket
+								var frame = canvas.getBoundingClientRect();
+								var x = event.clientX - frame.left;
+								
+								//setter hva som skal skje hvis den er innenfor visse posisjoner så jeg vet hvilken kolonne som blir trykket på
+								//starter setValue finksjonen og gir en verdi som tilsvarer hvilken kollonne som ble trykket på
+								if(x > 20 && x < 75)
+								{
+									setValue(0);
+								}
+								else if(x > 75 && x < 130)
+								{
+									setValue(1);
+								}
+								else if(x > 130 && x < 185)
+								{
+									setValue(2);
+								}
+								else if(x > 185 && x < 240)
+								{
+									setValue(3);
+								}
+								else if(x > 240 && x < 295)
+								{
+									setValue(4);
+								}
+								else if(x > 295 && x < 350)
+								{
+									setValue(5);
+								}
+								else if(x > 350 && x < 405)
+								{
+									setValue(6);
+								}
+								else if(x > 405 && x < 460)
+								{
+									setValue(7);
+								}
+								
+								//sjekker om powerup darkness er aktivert, hvis den ikke er aktivert skal ikke neste spiller se hvordan brettet ser ut
+								if(darknessActive == false && power == false)
+								{
+									//tegner brettet med de nye verdiene
+									drawMap();
+								}
+								//legger til en timer hvis power up blir trykket på slik at det blir vist vilken power up som aktiveres
+								else if(darknessActive == false && power != "" && power != "Darkness")
+								{
+									//må tegne map siden spiller kan trykke på Darkness så på ny power up
+									drawMap();
+									inCanvas.font = "60px Arial";
+									inCanvas.fillStyle = "black";
+									inCanvas.fillText((power),(150),(150));
+									setTimeout(function(){drawMap();}, 1500);
+								}
+								else
+								{
+									//setter darkness = false da den bare skal vare en runde
+									darknessActive = false;
+								}
+								
+								document.getElementById("vic").innerHTML = ""
+								//for løkke for å finne ut om noen har fire på rad
+								for(i = 0; i < 8; i++)
+								{
+								//lager variabel som bestemmer når den skal se etter fire på rad diagonalt
+								var checkRed = 8 - i;
+									for(r = 0; r < 8; r++)
+									{
+										//finner ut om rød har fire på rad bortover
+										if(fourInARow[i][r] == "red")
+										{
+											victoryRed[0]++;
+											if(victoryRed[0] == 4)
+											{
+												victoryScreen("Rød");
+												break;
+											}
+										}
+										else
+										{
+											victoryRed[0] = 0;
+										}
+										//finner ut om rød har fire på rad oppover
+										if(fourInARow[r][i] == "red")
+										{
+											victoryRed[1]++;
+											if(victoryRed[1] == 4)
+											{
+												victoryScreen("Rød");
+												break;
+											}
+										}
+										else
+										{
+											victoryRed[1] = 0;
+										}
+										
+										//finner ut om rød har fire på rad diagonalt
+										//sørger for at den ikke kjører da den hadde lett etter posisjoner i arrayet som ikke finnes
+										if(r <= checkRed-1)
+										{
+											//sjekker arrayet, [r+i] går nedover slik at den hopper en ned hver gang for løkka med variabel i kjører [r] går mot høyre slik at de alltid sjekker en diagonal linje. Denne sjekker bare venstre trekant nede derfor er det fire if, 2 for hver trekant 2 for hver vei
+											if(fourInARow[r+i][r] == "red")
+											{
+												victoryRed[2]++;
+												if(victoryRed[2] == 4)
+												{
+													victoryScreen("Rød");
+													break;
+												}
+											}
+											else
+											{
+												victoryRed[2] = 0;
+											}
+											
+											if(fourInARow[r][r+i] == "red")
+											{
+												victoryRed[3]++;
+												if(victoryRed[3] == 4)
+												{
+													victoryScreen("Rød");
+													break;
+												}
+											}
+											else
+											{
+												victoryRed[3] = 0;
+											}
+											
+											if(fourInARow[r+i][7-r] == "red")
+											{
+												victoryRed[4]++;
+												if(victoryRed[4] == 4)
+												{
+													victoryScreen("Rød");
+													break;
+												}
+											}
+											else
+											{
+												victoryRed[4] = 0;
+											}
+											
+											if(fourInARow[r][7-(r+i)] == "red")
+											{
+												victoryRed[5]++;
+												if(victoryRed[5] == 4)
+												{
+													victoryScreen("Rød");
+													break;
+												}
+											}
+											else
+											{
+												victoryRed[5] = 0;
+											}
+										}
+									
+										//finner ut om gul har fire på rad bortover
+										if(fourInARow[i][r] == "yellow")
+										{
+											victoryYellow[0]++;
+											if(victoryYellow[0] == 4)
+											{
+												victoryScreen("Gul");
+												break;
+											}
+										}
+										else
+										{
+											victoryYellow[0] = 0;
+										}
+										
+										//finner ut om gul har fire på rad oppover
+										if(fourInARow[r][i] == "yellow")
+										{
+											victoryYellow[1]++;
+											if(victoryYellow[1] == 4)
+											{
+												victoryScreen("Gul");
+												break;
+											}
+										}
+										else
+										{
+											victoryYellow[1] = 0;
+										}
+										
+										//finner ut om gul har fire på rad diagonalt
+										//sørger for at den ikke kjører da den hadde lett etter posisjoner i arrayet som ikke finnes
+										if(r <= checkRed-1)
+										{
+											//Samme fremgangsmåte som på rød
+											if(fourInARow[r+i][r] == "yellow")
+											{
+												victoryYellow[2]++;
+												if(victoryYellow[2] == 4)
+												{
+													victoryScreen("Gul");
+													break;
+												}
+											}
+											else
+											{
+												victoryYellow[2] = 0;
+											}
+											
+											if(fourInARow[r][r+i] == "yellow")
+											{
+												victoryYellow[3]++;
+												if(victoryYellow[3] == 4)
+												{
+													victoryScreen("Gul");
+													break;
+												}
+											}
+											else
+											{
+												victoryYellow[3] = 0;
+											}
+											
+											if(fourInARow[r+i][7-r] == "yellow")
+											{
+												victoryYellow[4]++;
+												if(victoryYellow[4] == 4)
+												{
+													victoryScreen("Gul");
+													break;
+												}
+											}
+											else
+											{
+												victoryYellow[4] = 0;
+											}
+											
+											if(fourInARow[r][7-(r+i)] == "yellow")
+											{
+												victoryYellow[5]++;
+												if(victoryYellow[5] == 4)
+												{
+													victoryScreen("Gul");
+													break;
+												}
+											}
+											else
+											{
+												victoryYellow[5] = 0;
+											}
+										}
+									}
+									//setter alle vinne verdiene til 0 slik at man ikke vinner med å ha tre på rad nederst og en brikke øverst i neste kolonne
+									for(e = 0; e < 6; e++)
+									{
+										victoryRed[e] = 0;
+										victoryYellow[e] = 0;
+									}
+									
+								}
+								
+								power = "";
+							}
+							
+							
+							
+							
+							
+							
+							//Funksjon for å sette ny verdi i hovedarray når en kolonne blir trykket på
+							function setValue(position)
+							{
+								//sjekker om powerup reverse = false da den endrer gravitasjonen i spillet til opp ned
+								if(reverseActive == false)
+								{
+									//lager for løkke for å sørge for at den nye verdien alltid havner så langt nede som mulig
+									for(i = 7; i > -1; i--)
+									{
+										//sjekker hvilken plass som er ledig
+										if(fourInARow[i][position] != "red" && fourInARow[i][position] != "yellow")
+										{
+											//sjekker om det er gul eller rød som trykket
+											if(player1 == true)
+											{
+												//sjekker om han trykket på powerup
+												if(fourInARow[i][position] == "power")
+												{
+													//starter en random powerup
+													powerUp[Math.floor(Math.random()*4)](i, position, "red");
+												}
+												else
+												{
+													//setter verdien til rød hvis det ikke var powerup
+													fourInARow[i][position] = "red";
+												}
+												//stopper player1 sin tur
+												player1 = false;
+											}
+											else
+											{
+												//sjekker om han trykket på powerup
+												if(fourInARow[i][position] == "power")
+												{
+													//starter en random powerup
+													powerUp[Math.floor(Math.random()*4)](i, position, "yellow");
+												}
+												else
+												{
+													//setter verdien til gul hvis det ikke var powerup
+													fourInARow[i][position] = "yellow";
+												}
+												//starter player1 sin tur
+												player1 = true;
+											}
+											//break når en passer
+											break;
+										}
+									}
+								}
+								else
+								{
+									//lager for løkke for å sørge for at den nye verdien alltid havner så langt nede som mulig
+									for(i = 0; i < 8; i++)
+									{
+										//sjekker hvilken plass som er ledig
+										if(fourInARow[i][position] != "red" && fourInARow[i][position] != "yellow")
+										{
+											//sjekker om det er gul eller rød som trykket
+											if(player1 == true)
+											{
+												//sjekker om han trykket på powerup
+												if(fourInARow[i][position] == "power")
+												{
+													//starter en random powerup
+													powerUp[Math.floor(Math.random()*3)](i, position, "red");
+												}
+												else
+												{
+													//setter verdien til rød hvis det ikke var powerup
+													fourInARow[i][position] = "red";
+												}
+												//stopper player1 sin tur
+												player1 = false;
+											}
+											else
+											{
+												//sjekker om han trykket på powerup
+												if(fourInARow[i][position] == "power")
+												{
+													//starter en random powerup
+													powerUp[Math.floor(Math.random()*3)](i, position, "yellow");
+												}
+												else
+												{
+													//setter verdien til gul hvis det ikke var powerup
+													fourInARow[i][position] = "yellow";
+												}
+												//starter player1 sin tur
+												player1 = true;
+											}
+											//break når en passer
+											break;
+										}
+									}
+								}
+							}
+							
+							
+							
+							
+							
+							
+							//Funksjon som tegner brettet
+							function drawMap(){
+								
+								//tegner bakgrunnen
+								inCanvas.beginPath();
+								inCanvas.rect(0, 0, 500, 500);
+								inCanvas.fillStyle = "royalblue";
+								inCanvas.fill();
+								
+								//for løkke som tegner verdiene i de loddrette rekkene
+								for(i = 0; i < 8; i++)
+								{
+									//for løkke som tegner verdiene i de vannrette rekkene
+									for(e = 0; e < 8; e++)
+									{
+										//lager sirkler utifra hvilken verdi de har i arrayet
+										//kaller på funksjonen "sircle" og fyller inn verdiene "sircle" trenger
+										if(fourInARow[i][e] == "blank")
+										{
+											sircle(55*(e+1), 55*(i+1), "white", false);
+										}
+										if(fourInARow[i][e] == "power")
+										{
+											sircle(55*(e+1), 55*(i+1), "white", true);
+										}
+										if(fourInARow[i][e] == "red")
+										{
+											sircle(55*(e+1), 55*(i+1), "red", false);
+										}
+										if(fourInARow[i][e] == "yellow")
+										{
+											sircle(55*(e+1), 55*(i+1), "yellow", false);
+										}
+									}
+								}
+
+							}
+							
+							
+							
+							//funksjon for at skjermen blir blå med tekst om hvem som vant
+							//gir canvas ny onclick som restarter spillet
+							function victoryScreen(color)
+							{
+								inCanvas.beginPath();
+								inCanvas.rect(0, 0, 500, 500);
+								inCanvas.fillStyle = "royalblue";
+								inCanvas.fill();
+								inCanvas.font = "60px Arial";
+								inCanvas.fillStyle = "black";
+								inCanvas.fillText((color + " vant! :D"),(60),(150));
+								inCanvas.font = "30px Arial";
+								inCanvas.fillText("Trykk for å se brettet",(40),(250));
+								canvas.onclick = drawMap;
+							}
+							
+							function restart()
+							{
+								inCanvas.beginPath();
+								inCanvas.rect(0, 0, 500, 500);
+								inCanvas.fillStyle = "royalblue";
+								inCanvas.fill();
+								
+								//array for powerUp funksjonene og for brettet
+								fourInARow = [];
+								
+								//setter player1 starter
+								player1 = true;
+								victoryRed  = [0, 0];
+								victoryYellow  = [0, 0];
+								
+								//setter onclick listener til canvas (vet kake er ett dårlig navn men kom ikke på noe bedre :P)
+								canvas.onclick = kake;
+								
+								//variabler for power ups
+								darknessActive = false;
+								reverseActive = false;
+		
+								//starter funksjonen for å tegne brettet
+								startMap();
+							}
+							
+							
+							//fjerner alle brikkene rund eksplosjonen
+							function Explosion(position1, position2)
+							{
+								power = "Explosion";
+								
+								fourInARow[position1][position2] = "blank";
+								
+								if(position1 > 0 && position2 > 0)
+								{
+									fourInARow[position1 - 1][position2 - 1] = "blank";
+								}
+								if(position1 > 0)
+								{
+									fourInARow[position1 - 1][position2] = "blank";
+								}
+								if(position1 > 0 && position2 < 7)
+								{
+									fourInARow[position1 - 1][position2 + 1] = "blank";
+								}
+								if(position2 > 0)
+								{
+									fourInARow[position1][position2 - 1] = "blank";
+								}
+								if(position2 < 7)
+								{
+									fourInARow[position1][position2 + 1] = "blank";
+								}
+								if(position1 < 7 && position2 > 0)
+								{
+									fourInARow[position1 + 1][position2 - 1] = "blank";
+								}
+								if(position1 < 7)
+								{
+									fourInARow[position1 + 1][position2] = "blank";
+								}
+								if(position1 < 7 && position2 < 7)
+								{
+									fourInARow[position1 + 1][position2 + 1] = "blank";
+								}
+							}
+							
+							
+							
+							
+							
+							
+							//tegner en blå boks som dekker hele
+							function darkness(position1, position2, color)
+							{
+								power = "Darkness";
+								
+								inCanvas.beginPath();
+								inCanvas.rect(0, 0, 500, 500);
+								inCanvas.fillStyle = "royalblue";
+								inCanvas.fill();
+								fourInARow[position1][position2] = color;
+								//setter darkness true
+								darknessActive = true;
+								
+								inCanvas.font = "60px Arial";
+								inCanvas.fillStyle = "black";
+								inCanvas.fillText((power),(60),(150));
+							}
+							
+							
+							
+							
+							
+							
+							//funksjon som bytter plass på fargene
+							function switchere(position1, position2, color)
+							{
+								power = "switch";
+								
+								fourInARow[position1][position2] = color;
+								
+								//lager for løkke som går gjennom hele arrayet og endrer alle "red" til "yellow" og alle "yellow" til "red"
+								for(i = 0; i < 8; i++)
+								{
+									for(e = 0; e < 8; e++)
+									{
+										if(fourInARow[i][e] == "red")
+										{
+											fourInARow[i][e] = "yellow";
+										}
+										else if(fourInARow[i][e] == "yellow")
+										{
+											fourInARow[i][e] = "red";
+										}
+									}
+								}
+							}
+							
+							
+							
+							
+							
+							
+							//funksjon som setter gravitasjonen i spillet opp ned
+							function reverse(position1, position2, color)
+							{
+								power = "Reverse";
+								
+								fourInARow[position1][position2] = color;
+								if(reverseActive == false)
+								{
+									reverseActive = true;
+								}
+								else
+								{
+									reverseActive = false;
+								}
+							}
+						</script>
+					</div>
+				</article>
+			</section>
+			<aside id="side_news">
+			</aside>
+		</div>
+		<footer ID="the_footer">
+			Copyright TexMexProductions 2014
+		</footer>
+	</div>
+</body>
+</html>

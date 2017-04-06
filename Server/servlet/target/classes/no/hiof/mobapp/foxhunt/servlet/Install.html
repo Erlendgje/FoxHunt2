@@ -1,0 +1,97 @@
+<html xmlns:wicket="http://www.w3.org/1999/xhtml">
+<head>
+<title>Foxhunt Homepage</title>
+<style>
+.inline-edit {
+	border: 1px solid green;
+	background-color: #eeffee;
+	padding: 4px;
+}
+
+.inline-edit input {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.inline-edit p span {
+	padding: 0px;
+}
+
+body {
+	text-align: center;
+}
+
+.container {
+text-align: left;
+}
+
+.leftcontent {
+  float: left;
+  padding: 0% 2% 0% 0%;
+  width: 34%;
+}
+
+.centercontent {
+  top: 10px;
+  margin-left: 36%;
+  margin-right: 26%;
+}
+
+.rightcontent {
+  float: right;
+  padding: 0% 0% 0% 2%;
+  width: 24%;
+}
+
+.header {
+	background: #fff;
+	border: 1px solid #000;
+	clear:both;
+}
+    
+.box {
+    border: 1px solid #000;
+}
+</style>
+</head>
+
+<body>
+        
+    <div>
+        <h1>Foxhunt Installation</h1>
+	</div>
+    
+    <div class="container">
+	<div class="leftcontent">
+	    <div class="box">
+            <span style="border-style:solid"><strong>_</strong></span>
+        </div>
+        <br />
+        <div class="box">
+            <span style="border-style:solid"><strong>_</strong></span>
+        </div>
+	</div>
+	
+	<div class="rightcontent">
+	   <div class="box">
+           <span style="border-style:solid"><strong>_</strong></span>
+           
+       </div>
+       <br />
+        <div class="box"><span style="border-style: solid"><strong>_</strong></span> <br />
+        </div>
+    </div>
+    
+    <div class="centercontent">
+        <div class="box">
+        <span style="border-style:solid"><strong>Database creation</strong></span>
+        <br />
+		<p>There does not seem to be any database structure for the currently selected database. Do you want to create this structure and populate the db with some default values?
+		<p>Create and Populate: <a href="#" wicket:id="createandpopulate">database</a></p>
+		</div>
+    </div>
+    </div>
+</body>
+</html>
+

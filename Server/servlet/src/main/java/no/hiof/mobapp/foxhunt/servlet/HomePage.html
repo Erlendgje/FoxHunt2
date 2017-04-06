@@ -1,0 +1,175 @@
+<html xmlns:wicket="http://www.w3.org/1999/xhtml">
+<head>
+<title>Foxhunt Homepage</title>
+<style>
+.inline-edit {
+	border: 1px solid green;
+	background-color: #eeffee;
+	padding: 4px;
+}
+
+.inline-edit input {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.inline-edit p span {
+	padding: 0px;
+}
+
+body {
+	text-align: center;
+}
+
+.container {
+text-align: left;
+}
+
+.leftcontent {
+  float: left;
+  padding: 0% 2% 0% 0%;
+  width: 34%;
+}
+
+.centercontent {
+  top: 10px;
+  margin-left: 36%;
+  margin-right: 26%;
+}
+
+.rightcontent {
+  float: right;
+  padding: 0% 0% 0% 2%;
+  width: 24%;
+}
+
+.header {
+	background: #fff;
+	border: 1px solid #000;
+	clear:both;
+}
+    
+.box {
+    border: 1px solid #000;
+}
+</style>
+</head>
+
+<body>
+        
+    <div wicket:id="header" class="header">
+        <h1>Foxhunt Administration</h1>
+	</div>
+    
+    <div class="container">
+	<div wicket:id="menu" class="leftcontent">
+	    <div class="box">
+            <span style="border-style:solid"><strong>Step 1: Create/Select/Delete</strong></span>
+            <form wicket:id="form">
+             <p>Select game: <select wicket:id="sim_select"></select></p>
+            </form>
+            <p>Create new game/simulation: <a href="#" wicket:id="sim_new">New</a></p>
+            <p>Delete current: <a href="#" wicket:id="sim_delete">Delete</a></p>
+        </div>
+        <br />
+        <div class="box">
+            <span style="border-style:solid"><strong>Step 2: Setup and Information</strong></span>
+            <p>ID: <span wicket:id="gameid">message will be here</span><br />
+            Name: <span wicket:id="gamename" class="inline-edit"></span></p>
+            
+            <form wicket:id="behaviorform">
+             <p>Game type: <select wicket:id="behavior_select"></select></p>
+            </form>
+            
+            <p>Current State: <span wicket:id="gamestate"></span><br />
+            Gametime: <span wicket:id=gamelasted></span></p>
+            
+            <p> Comments:  <p wicket:id="gamecomments" class="inline-edit"></p></p>
+	    
+            <p>Properties for mobile client<br/>
+            <input type="checkbox" wicket:id="gamepropshowpoints" /> Show game points<br />
+            <input type="checkbox" wicket:id="gamepropshowotherhunters" /> Show other hunters<br />
+            <input type="checkbox" wicket:id="gamepropshowgpspos" /> Render GPS Position<br />
+            
+            <p>Properties for server<br/>
+            <input type="checkbox" wicket:id="gameproplogging" /> Log data</p>
+            
+            <p>Created on: <span wicket:id="gamecreated"></span><br />
+            Last run: <span wicket:id="gamelastrun"></span></p>
+        </div>
+	</div>
+	
+	<div class="rightcontent">
+	   <div class="box">
+           <span style="border-style:solid"><strong>Step 4: Start/Stop</strong></span>
+           <p>Start game: <a href="#" wicket:id="start">Start</a></p>
+           <p>Stop game: <a href="#" wicket:id="stop">Stop</a></p>
+           <br />
+           <!--  <p>Reinit from db: <a href="#" wicket:id="reset">Reset</a></p>  -->
+       </div>
+       <br />
+        <div class="box"><span style="border-style: solid"><strong>Step 5: Game Presentation</strong></span> <br />
+        <br />
+        <a href="status.html">Show Simulation - WebClient</a><br />
+        <a wicket:id="linkToGetConfig" href="#">Get GameConfig</a><br />
+        <a wicket:id="linkToGetState" href="#">Get GameStatus</a>
+        </div>
+    </div>
+    
+    <div wicket:id="simulationObjects" class="centercontent">
+        <div class="box">
+        <span style="border-style:solid"><strong>Step 3: Add/Remove Hunters</strong></span><br />
+        <br />
+        <p>Repopulate defaults: <a href="#" wicket:id="repopulate">Full</a> - <a href="#" wicket:id="repopulatesmall">Small</a></p>
+        
+        <table >
+            <tr>
+	            <td>ID</td>
+	            <td>Classname</td>
+	            <td>Name</td>
+	            <td>Action</td>
+            </tr>
+            <tr wicket:id="simObject">
+		    	<td wicket:id="ID"></td>
+		    	<td wicket:id="className" class="inline-edit"></td>
+		    	<td wicket:id="name" class="inline-edit"></td>
+		    	<td><a wicket:id="action">Remove</a></td>
+            </tr>
+            <tr>
+				<td>###</td>
+				<td>Hunter</td>
+				<td wicket:id="newHunterName" class="inline-edit"></td>
+				<td>Enter name and hit enter</td>
+            </tr>
+	  	</table>
+	  	
+	  	<p>Set general properties for this simulation</p>
+	  	
+	  	<table>
+            <thead>
+                <td colspan="2">Foxes</td><td colspan="3">Hunters</td>
+            </thead>
+            <tr>
+				<td>Detection range:</td><td wicket:id="foxDetectionRange" class="inline-edit"></td>
+				<td>Catch Radius:</td><td wicket:id="hunterCatchRadius" class="inline-edit"></td>
+            </tr>
+	      
+			<tr>
+				<td>Speed (m/s): </td><td wicket:id="foxSpeed" class="inline-edit"></td>
+			</tr>
+	      
+			<tr>
+                <td>Fox turn theta:  </td><td wicket:id="foxTurnTheta" class="inline-edit"></td>
+			</tr>
+			
+			<tr>
+				<td><a href="#" wicket:id="randomize">Randomize placement</a></td>
+			</tr>
+        </table>
+		</div>
+    </div>
+    </div>
+</body>
+</html>
+

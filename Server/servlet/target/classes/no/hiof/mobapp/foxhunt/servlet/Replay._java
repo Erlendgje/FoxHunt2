@@ -1,0 +1,609 @@
+package no.hiof.mobapp.foxhunt.servlet;
+
+import java.awt.MenuComponent;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Vector;
+
+import no.hiof.mobapp.foxhunt.game.GameObject;
+import no.hiof.mobapp.foxhunt.server.Simulation;
+import no.hiof.mobapp.foxhunt.server.Simulation.eMode;
+
+import org.apache.wicket.Application;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.PageParameters;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.CheckBox;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListItemModel;
+import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.markup.repeater.RefreshingView;
+import org.apache.wicket.markup.repeater.util.ModelIteratorAdapter;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.util.time.Duration;
+import org.apache.wicket.version.undo.Change;
+
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.AjaxSelfUpdatingTimerBehavior;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
+import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableLabel;
+import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableMultiLineLabel;
+
+/**
+ * Replay
+ */
+public class Replay extends WebPage {
+	// Access to simulation land
+	transient private WicketApplication wa = ((WicketApplication) WicketApplication.get());
+	
+	private final WebMarkupContainer simulationGameObjectListContainer;
+	private final WebMarkupContainer headerContainer;
+	private final WebMarkupContainer menuContainer;
+	
+	//private final RefreshingView simulationGameObjectView;
+	private final Label currentID;
+	private final DropDownChoice simulation_select;
+	
+	static private int nextFreeHunterID = 100;
+	
+	private Simulation.SimulationObject selectSimulationObject;
+	
+	DateFormat df = SimpleDateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL);
+	
+	/**
+	 * Constructor that is invoked when page is invoked without a session. final
+	 * PageParameters parameters
+	 * 
+	 * @param parameters
+	 *            Page parameters
+	 */
+	public Replay() {
+		wa.simulationMode = eMode.SIMULATION;
+		// Get the simulation
+		if (wa.sim != null) {
+			selectSimulationObject = wa.getSimulationObjectByID(wa.sim.getSimulationID(), wa.simulationObjectsModel);
+		} else {
+			selectSimulationObject = wa.getSimulationObjectByID(-1, wa.simulationObjectsModel);
+		}
+		
+		// Set simulation mode to REPLAY and not SIMULATION
+		wa.simulationMode = eMode.REPLAY;
+		wa.sim.setMode(eMode.REPLAY);
+		
+		
+		// Initialize containers
+		simulationGameObjectListContainer = new WebMarkupContainer("simulationObjects");
+		headerContainer = new WebMarkupContainer("header");
+		menuContainer = new WebMarkupContainer("menu");
+		
+		// Set model property model
+		setModel(new CompoundPropertyModel(this));
+			
+		/// Header Container Content
+		add(headerContainer.setOutputMarkupId(true));
+
+		
+		/// Simulation Objects Container Content
+		
+		
+		/*
+		// A Refreshing View of the Simulation Game Objects
+		simulationGameObjectView = new RefreshingView("simObject") {
+			@Override
+			protected Iterator<Simulation.DBObject> getItemModels() {
+
+				// Since we sometimes can be in between simulation creation, etc we need to do some sanity checks.
+				if (wa == null)	{
+					return new ArrayList<Simulation.DBObject>().iterator();
+				}
+				
+				
+				if (wa.sim == null) {
+					wa.checkSimAndFix(); // TODO: Verify
+				}
+				
+				//System.out.println("Fetching new list of objects (Simulation Game Objects) With SimID: " + wa.sim.getSimulationID());
+				List<Simulation.DBObject> simObjects = wa.sim.getSimulationObjects();
+
+				Iterator<Simulation.DBObject> simObjectsIt = (Iterator<Simulation.DBObject>) simObjects.iterator();
+
+				Vector<Simulation.DBObject> filteredSimObjects = new Vector<Simulation.DBObject>(10);
+				// We loop over here to find what the nextFreeHunterID is (a bit dirty but hey)
+				nextFreeHunterID = 100;
+
+				while (simObjectsIt.hasNext()) {
+					Simulation.DBObject tmp = simObjectsIt.next();
+					if (tmp.getClassName() != null	&& tmp.getClassName().equals("Hunter")) {
+						filteredSimObjects.add(tmp);
+						
+						if (tmp.getID() == nextFreeHunterID && nextFreeHunterID < 105) {
+							nextFreeHunterID++;
+						}
+					}
+				}
+
+				// the iterator returns DBObjects, but we need it to return models, 
+				// we use this adapter class to perform on-the-fly conversion.
+				return new ModelIteratorAdapter((Iterator<Simulation.DBObject>)filteredSimObjects.iterator()) {
+
+					protected IModel model(Object object) {
+						return new Model((Simulation.DBObject) object);
+					}
+
+				};
+			}
+
+			@Override
+			protected void populateItem(final Item item) {
+				final Simulation.DBObject dbo = (Simulation.DBObject) item.getModelObject();
+				
+				item.setModel(new CompoundPropertyModel(dbo));
+
+				item.add(new Label("ID"));
+				item.add(new AjaxEditableLabel("className"));
+				item.add(new AjaxEditableLabel("name"));
+
+				item.add(new Link("action") {
+					private static final long serialVersionUID = 3062106375535388517L;
+
+					@Override
+					public void onClick() {
+						item.modelChanging();
+
+						simulationGameObjectView.modelChanging();
+						
+						// Remove item from the database config for the current simulation and invalidate listView
+						wa.sim.removeSimulationObjectProperties(dbo.getID());
+						wa.sim.removeSimulationObject(dbo.getID());
+						
+						// Remove from current instantiated simulation as well
+						wa.sim.world.gameObjects.remove(wa.sim.world.getHunter(Integer.toString(dbo.getID())));
+						
+						simulationGameObjectView.modelChanged();
+						simulationGameObjectView.removeAll();
+					}
+				});
+			}
+		};
+
+
+		simulationGameObjectListContainer.add(simulationGameObjectView);
+
+		add(simulationGameObjectListContainer.setOutputMarkupId(true));
+		
+		*/
+		/// Menu Container Content
+		// Simulation Info
+		//currentID = new Label("sim_currentid", Integer.toString(wa.sim.getSimulationID()));
+		currentID = new Label("gameid"); // , new PropertyModel(selectSimulationObject, "ID")
+		
+		final AjaxEditableLabel simulationNameLabel= new AjaxEditableLabel("gamename") // , new PropertyModel(selectSimulationObject, "name")
+		{
+			@Override
+			protected void onSubmit(AjaxRequestTarget target) {
+				simulation_select.modelChanged();
+				
+				menuContainer.modelChanged();
+				
+				target.addComponent(menuContainer);
+				super.onSubmit(target);
+			}
+		};
+		
+		AjaxEditableMultiLineLabel gameComments = new AjaxEditableMultiLineLabel("gamecomments")
+		{
+			@Override
+			protected void onSubmit(AjaxRequestTarget target) {	
+				menuContainer.modelChanged();
+				
+				target.addComponent(menuContainer);
+				super.onSubmit(target);
+			}
+			
+			
+		};
+		
+		boolean isReadOnly = true; // set to true if you want the form to be readOnly; false to be editable
+
+		 AttributeModifier ro = 
+		  new AttributeModifier("readonly", isReadOnly, new Model("readonly"));  // For most Form components
+		 AttributeModifier disabled = 
+			  new AttributeModifier("disabled", isReadOnly, new Model("disabled"));  // For DropDowns etc.
+		 
+		menuContainer.add(new CheckBox("gamepropshowpoints").add(ro).add(disabled));
+		menuContainer.add(new CheckBox("gamepropshowotherhunters").add(ro).add(disabled));
+		menuContainer.add(new CheckBox("gamepropshowgpspos").add(ro).add(disabled));
+		menuContainer.add(new CheckBox("gameproplogging").add(ro).add(disabled));
+				
+		menuContainer.add(new Label("gamestate"));
+		
+		menuContainer.add(new Label("gamecreated"));
+		menuContainer.add(new Label("gamelastrun"));
+		
+		Label gameLasted = new Label("gamelasted");
+			
+		//gameLasted.add(new AjaxSelfUpdatingTimerBehavior(Duration.seconds(2)));
+
+		menuContainer.add(gameLasted);
+		
+		menuContainer.add(gameComments);
+		menuContainer.add(currentID);
+		menuContainer.add(simulationNameLabel);
+		
+		// Simulation Management
+		Form form = new Form("form");
+		
+		// Create the simulation drop down select
+		simulation_select = new DropDownChoice("sim_select", wa.simulationObjectsModel,
+				new IChoiceRenderer() {
+					public Object getDisplayValue(Object obj) {
+						Simulation.SimulationObject c = (Simulation.SimulationObject) obj;
+						return c.getID() + " - " + c.getName();
+					}
+
+					public String getIdValue(Object obj, int index) {
+						Simulation.SimulationObject c = (Simulation.SimulationObject) obj;
+						return Integer.toString(c.getID());
+					}
+				});
+
+		form.add(simulation_select);
+		
+		menuContainer.add(form);
+
+		add(menuContainer.setOutputMarkupId(true));
+		
+		simulation_select.add(new AjaxFormComponentUpdatingBehavior("onchange")
+		{
+			protected void onUpdate(AjaxRequestTarget target)
+			{
+				// Simulation Change - Need to re-fetch and rebuild everything.
+				
+				// Stop current simulation
+				wa.sim.stop();
+
+				System.out.println("Current Simulation ID is: "+ selectSimulationObject.getID());
+				
+				// Create new simulation
+				wa.sim = new Simulation();
+
+				wa.simulationObject = selectSimulationObject;
+				// Set the new simulationID
+				wa.sim.setSimulationID(selectSimulationObject.getID());
+
+				// Connect to the database
+				wa.sim.connect();
+
+				// Initialize the simulation
+				wa.sim.initSimulation();
+
+				// Spawn a thread
+				wa.tsim = new Thread(wa.sim);
+				
+				//simulationGameObjectView.modelChanged();
+				//simulationGameObjectView.removeAll();
+
+				//simulationGameObjectListContainer.modelChanged();
+				
+				currentID.modelChanged();
+				
+				simulationNameLabel.modelChanged();
+				
+				target.addComponent(menuContainer);
+				//target.addComponent(simulationGameObjectListContainer);
+				
+			}
+		});
+				
+		// Simulation Control
+		/*
+		add(new Link("reset") {
+			public void onClick() {
+				
+				// Stop current simulation
+				stopSim();
+
+				// Set sim and tsim to null forcing a reinitalization from database
+				nullifySim();
+				
+				// Create new threads and simulation
+				checkSimAndFix();
+
+			}
+		});*/
+
+		add(new Link("start") {
+			public void onClick() {
+				// Set sim and tsim to null forcing a reinitalization from database
+				wa.simNullify();
+				
+				// Start the simulation
+				wa.simStart();
+			}
+		});
+		
+		add(new AjaxLink("stop") {
+			@Override
+			public void onClick(AjaxRequestTarget target) {
+				// TODO Auto-generated method stub
+				wa.simStop();
+				
+				menuContainer.modelChanged();
+				
+				// Add the new containers to our ajax-return
+				target.addComponent(menuContainer);
+			}
+		});
+
+		add(new BookmarkablePageLink("linkToGetConfig", GetConfig.class));
+		add(new BookmarkablePageLink("linkToGetState", GetState.class));
+		//add(new Label("message", "Number of gameObjects in simulation: "
+		//		+ Integer.toString(wa.sim.world.gameObjects.size())));
+
+	}
+
+	
+	// Getters and setters for general fox and hunter properties
+	
+	public String getFoxDetectionRange()
+	{
+		String out = getFirstGameObjectSimProperty("Fox", "detectionRange");
+		if (out == null)
+		{
+			out = "30";
+		}
+		
+		return out;
+	}
+	
+
+	public String getFoxSpeed()
+	{
+		String out = getFirstGameObjectSimProperty("Fox", "speed");
+		if (out == null)
+		{
+			out = "2";
+		}
+		
+		return out;
+	}
+
+	public String getFoxTurnTheta()
+	{
+		String out = getFirstGameObjectSimProperty("Fox", "turnTheta");
+		if (out == null)
+		{
+			out = "35";
+		}
+		
+		return out;
+	}
+	
+	public String getHunterCatchRadius()
+	{
+		String out = getFirstGameObjectSimProperty("Hunter", "catchRadius");
+		//no.hiof.mobapp.foxhunt.gamebehavior.Hunter
+		if (out == null)
+		{
+			out = "9";
+		}
+		
+		return out;
+	}
+	
+	private String getFirstGameObjectSimProperty(String className, String property)
+	{
+		Iterator<Simulation.DBObject> gameObjectsIt = (Iterator<Simulation.DBObject>) wa.sim.getSimulationObjects().iterator();
+		
+		while (gameObjectsIt.hasNext())
+		{
+			Simulation.DBObject dbo = gameObjectsIt.next();
+			if (dbo == null)
+			{
+				continue;
+			}
+			if (dbo.getClassName().equals(className))
+			{
+				String out = dbo.getSimProperty(property);
+				if (out != null)
+				{
+					return out;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public String getGameid()
+	{
+		//return this.selectSimulationObject;
+		if (this.selectSimulationObject != null)
+		{
+			return ""+this.selectSimulationObject.getID();
+		}
+		return null;
+	}
+
+	public void setGameid(String gameid)
+	{
+		return;
+	}
+	
+	public String getGamename()
+	{
+		return this.selectSimulationObject.getName();
+	}
+	
+	public String getGamestate()
+	{
+		if (wa == null) {
+			return "";
+		}
+		
+		if (wa.tsim == null) {
+			return "Stopped!";
+		}
+
+		return (wa.sim.getState() && wa.tsim.isAlive()) ? "Running" : "Stopped";
+	}
+
+	public void setGamestate(String gameState)
+	{
+		return;
+	}
+	
+	public String getGamecreated()
+	{
+		String lastInit = wa.sim.getSimulationProperty("LastInit");
+		
+		if (lastInit == null)
+		{
+			lastInit = ""+System.currentTimeMillis();
+		}
+		
+		return df.format(new Date( Long.parseLong(lastInit)));
+		
+		//return this.selectSimulationObject;
+		//return ""+this.selectSimulationObject.getID();
+	}
+	
+	public void setGamecomments(String gamecomments)
+	{
+		wa.sim.setSimulationProperty("Comment", gamecomments);
+	}
+	
+	public String getGamecomments()
+	{
+		String comment = wa.sim.getSimulationProperty("Comment");
+		
+		return comment;
+	}
+	
+	public String getGamepropshowpoints()
+	{
+		String comment = wa.sim.getSimulationProperty("ShowPoints");
+		
+		return comment;
+	}
+		
+	public String getGamepropshowotherhunters()
+	{
+		String comment = wa.sim.getSimulationProperty("ShowOtherHunters");
+		
+		return comment;
+	}
+		
+	public String getGameproplogging()
+	{
+		String comment = wa.sim.getSimulationProperty("Logging");
+		
+		return comment;
+	}
+		
+	public String getGamepropshowgpspos()
+	{
+		String comment = wa.sim.getSimulationProperty("ShowGPSPos");
+		
+		return comment;
+	}
+	
+	public void setGamecreated()
+	{
+		return;
+	}
+	
+	public String getGamelastrun()
+	{	
+		String lastRun = wa.sim.getSimulationProperty("LastRun");
+		
+		if (lastRun != null)
+		{
+			return df.format(new Date( Long.parseLong(lastRun)));
+		} else {
+			return "never";
+		}
+		
+		//return this.selectSimulationObject;
+		//return ""+this.selectSimulationObject.getID();
+	}
+
+	public void setGamelastrun()
+	{
+		return;
+	}
+	
+	public String getGamelasted()
+	{
+		// Uhm. what? wa doesn't exist? Some insane intermediate state
+		if (wa == null)
+		{
+			return "";
+		}
+		// We are in a transition state where the simulation have just been deleted and is in the process of being created.
+		if (wa.sim == null)
+		{
+			return "";
+		}
+		String lastStopped = wa.sim.getSimulationProperty("LastStopped");
+		String lastStarted = wa.sim.getSimulationProperty("LastRun");
+		
+		if (lastStopped == null)
+		{
+			lastStopped = ""+System.currentTimeMillis();
+		}
+		
+		if (lastStarted == null)
+		{
+			lastStarted = ""+System.currentTimeMillis();
+		}
+			
+		long diff = Long.parseLong(lastStopped) - Long.parseLong(lastStarted);
+		
+		diff = diff/1000; // the time is specified in milliseconds, convert it to seconds
+		
+		String lasted = ""+ (int)(diff/60) +":"+ diff%60;
+		
+		return lasted;
+		//return this.selectSimulationObject;
+		//return ""+this.selectSimulationObject.getID();
+	}
+
+	public void setGamelasted()
+	{
+		return;
+	}
+
+	public Simulation.SimulationObject getSim_select() {
+		return this.selectSimulationObject;
+	}
+	
+	public void setSim_select(Simulation.SimulationObject selectedMake) {
+		this.selectSimulationObject = selectedMake;
+	}
+
+	// This method is called for a blank newHunter field
+	public String getNewHunterName() {
+		return null;
+	}
+}

@@ -1,0 +1,14 @@
+package no.hiof.mobapp.foxhunt.servlet;
+
+import org.apache.wicket.PageParameters;
+
+/**
+ * GetState
+ */
+public class GetStateTagSmall extends GetStateTag {
+	public GetStateTagSmall(PageParameters parameters) {
+		super(parameters);
+		// TODO Auto-generated constructor stub
+	}
+
+}

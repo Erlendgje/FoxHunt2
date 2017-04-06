@@ -1,0 +1,107 @@
+package no.hiof.mobapp.foxhunt.servlet;
+
+import java.util.List;
+
+import no.hiof.mobapp.foxhunt.game.GameObject;
+import no.hiof.mobapp.foxhunt.game.objects.TagPlayer;
+import no.hiof.mobapp.foxhunt.game.World;
+
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.PageParameters;
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.Model;
+
+/**
+ * GetState
+ */
+public class GetConfigTag extends WebPage {
+
+	private static final long serialVersionUID = 1L;
+	transient private WicketApplication wa = ((WicketApplication)WicketApplication.get());
+	
+	transient private World world = wa.sim.world;
+    /**
+	 * Constructor that is invoked when page is invoked without a session.
+	 * final PageParameters parameters
+	 * 
+	 * @param parameters
+	 *            Page parameters
+	 */
+    public GetConfigTag(PageParameters parameters) {
+    	// Fetch arguments
+    	String id = "NONE";
+    	double killrange = 9.0;
+    	
+		if (parameters.containsKey("userid"))
+		{
+			id = parameters.getString("userid");
+		}
+		
+		if (wa.sim != null)
+		{
+			if (id.equals("NONE"))
+			{
+				id = "200";
+			}
+			
+			//System.out.println("Looking up Hunter: " + id);
+			TagPlayer h = (TagPlayer) wa.sim.world.getGameObjectByID(id);
+			
+			//System.out.println("Returned: " + h);
+			
+			if (h != null) {
+				killrange = h.getKillRange();
+			}
+		}
+		
+        // Add the simplest type of label
+        add(new Label("message", id));
+
+        // Add the border
+        Label boundary = new Label("boundary", "");
+        boundary.add(new AttributeModifier("ltmin", true, new Model(Double.toString(world.getMap().c1.lat))));
+        boundary.add(new AttributeModifier("ltmax", true, new Model(Double.toString(world.getMap().c2.lat))));
+        boundary.add(new AttributeModifier("lnmin", true, new Model(Double.toString(world.getMap().c1.lon))));
+        boundary.add(new AttributeModifier("lnmax", true, new Model(Double.toString(world.getMap().c2.lon))));
+
+        add(boundary);
+
+        Label displaySettings = new Label("displaysettings", "");
+
+        displaySettings.add(new AttributeModifier("gps", true, new Model( wa.sim.getSimulationProperty("ShowGPSPos"))));
+        displaySettings.add(new AttributeModifier("opponents", true, new Model( wa.sim.getSimulationProperty("ShowOtherHunters"))));
+        displaySettings.add(new AttributeModifier("points", true,new Model( wa.sim.getSimulationProperty("ShowPoints"))));
+        displaySettings.add(new AttributeModifier("catchrange", true,new Model(Double.toString(killrange))));
+        
+        
+        add(displaySettings);
+        
+		// A Wicket-style Loop/List of Items
+		add(new ListView("gameObject", (List)world.gameObjects) {
+			// This method is called for each 'entry' in the list.
+			@Override protected void populateItem(ListItem item) {
+				GameObject go = (GameObject)item.getModelObject();
+				item.add(new AttributeModifier("id", true, new Model(Integer.toString(go.dbObjectID))));
+				item.add(new AttributeModifier("groupid", true, new Model(Integer.toString(go.getGroupID()))));
+				item.add(new AttributeModifier("class", true, new Model(go.getConfigValue("ClassName"))));
+				item.add(new AttributeModifier("name", true, new Model(go.getConfigValue("name"))));
+				
+				item.add(new AttributeModifier("lt", true, new Model(Double.toString(go.getLocation().lat))));
+				item.add(new AttributeModifier("ln", true, new Model(Double.toString(go.getLocation().lon))));
+				
+				//item.add(new Label("objectID", );
+				
+				//item.add(new Label("group", Integer.toString(go.getGroupID())));
+			}		
+		});
+    }
+    
+    @Override
+    public String getMarkupType() {
+            return "xml";
+    }
+
+}

@@ -1,0 +1,92 @@
+            <form wicket:id="simObjectAddForm">
+            
+                            <p>
+                   <input type="submit" value="Update"/>
+                </p>
+            </form>
+            
+            
+            
+            
+            
+                        // This method is called for each 'entry' in the list.
+            @Override protected void populateItem(ListItem item) {
+                
+                final Simulation.DBObject dbo = (Simulation.DBObject)item.getModelObject();
+                setModel(new CompoundPropertyModel(dbo));
+                item.add( new Label("objectId", "ID"));
+                item.add( new Label("className", ));
+                item.add( new Label("objectName", dbo.getName()));
+                
+                /*
+                if (dbo.getClassName().equals("Hunter"))
+                {
+                    item.add( new Label("action", "Remove Object"));
+                } else {
+                    item.add( new Label("action", "-"));
+                    
+                    
+                    
+                    
+                                        <tr>
+                        <td>###</td>
+                        <td>Hunter</td>
+                        <td><input wicket:id="name" type="text" /></td>
+                        <td><a wicket:id="action">Remove</a></td>
+                    </tr>
+
+     class AddHunterForm extends Form {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 780321507377410089L;
+        private final Simulation.DBObject dbObject = wa.sim.new DBObject();
+
+        public AddHunterForm(String id) {
+            super(id);
+            add(new TextField("name", new PropertyModel(dbObject, "name")));
+        }
+
+        public void onSubmit() {
+            if (isNameValid()) {
+                int objectId = 100;
+
+                wa.sim.addSimulationObject(objectId);
+                wa.sim.setSimulationObjectProperty(objectId, "name", dbObject.getName());
+
+                setResponsePage(HomePage.class);
+            }
+        }
+
+        /**
+         * Determines if the special case phone number is in the correct format.
+         * The user will receive and error message if the phone number is not in
+         * the correct format.
+         * 
+         * @return
+         */
+        private boolean isNameValid() {
+            String name = dbObject.getName();
+            if (name == null)
+            {
+                System.out.println("!!!!!!!!! ERROR NAME IS NULL");
+                return false;
+            }
+            if (name.length() == 0) {
+                error("You must enter a name");
+                return false;
+            }
+
+            return true;
+        }
+    }
+    
+    
+    
+    
+    WICKET
+    
+        <name>State Information</name>
+    <requestID wicket:id="message">message will be here</requestID>
+    
+    xmlns:wicket="http://www.w3.org/1999/xhtml"

@@ -1,0 +1,520 @@
+package no.hiof.mobapp.foxhunt.servlet;
+
+import java.awt.MenuComponent;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+
+import no.hiof.mobapp.foxhunt.game.GameObject;
+import no.hiof.mobapp.foxhunt.server.Simulation;
+
+import org.apache.wicket.Application;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.PageParameters;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListItemModel;
+import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.markup.repeater.RefreshingView;
+import org.apache.wicket.markup.repeater.util.ModelIteratorAdapter;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.version.undo.Change;
+
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableLabel;
+
+/**
+ * Homepage
+ */
+public class CopyOfHomePage extends WebPage {
+
+	private static final long serialVersionUID = 1L;
+
+	// Access to simulation land
+	transient private WicketApplication wa = ((WicketApplication) WicketApplication.get());
+
+	// Models to fetch data from simulation
+	Model simulationObjectsModel = new Model() {
+		private static final long serialVersionUID = -772018787443625871L;
+
+		@Override
+		public Object getObject() {
+			// return super.getObject();
+			return wa.sim.getSimulations();
+		}
+	};
+	
+	
+	
+	private final WebMarkupContainer simObjectListContainer;
+	private final WebMarkupContainer headerContainer;
+	private final WebMarkupContainer menuContainer;
+	
+	
+	private final RefreshingView simObjectList;
+	private final Label currentID;
+	private final DropDownChoice simulation_select;
+	
+	static private int newSimID = 1;
+
+	static private int nextFreeHunterID = 100;
+	
+	private Simulation.SimulationObject selectSimulationObject;
+
+	// private List<Simulation.DBObject> simObjects = ;
+
+	
+	public Simulation.SimulationObject getSimulationObjectByID(int id, Model list)
+	{
+		
+		Iterator<Simulation.SimulationObject> it = ((List<Simulation.SimulationObject>)list.getObject()).iterator();
+		
+		while (it.hasNext())
+		{
+			Simulation.SimulationObject cur = it.next();
+			if (cur.getID() == id)
+			{
+				return cur;
+			}
+		}
+		
+		return null;
+	}
+	/**
+	 * Constructor that is invoked when page is invoked without a session. final
+	 * PageParameters parameters
+	 * 
+	 * @param parameters
+	 *            Page parameters
+	 */
+	public CopyOfHomePage() {
+		// Create models
+		
+		selectSimulationObject = getSimulationObjectByID(newSimID, simulationObjectsModel);
+				
+		// Initialize containers
+		simObjectListContainer = new WebMarkupContainer("simObjectsContainer");
+		headerContainer = new WebMarkupContainer("header");
+		menuContainer = new WebMarkupContainer("menu");
+		
+		// Set model property model
+		setModel(new CompoundPropertyModel(this));
+		
+		
+		// Stuff for the header panel
+		currentID = new Label("sim_currentid", Integer.toString(wa.sim
+				.getSimulationID()));
+		
+		headerContainer.add(currentID);
+
+		// A Wicket-style Loop/List of Items
+		simObjectList = new RefreshingView("simObject") {
+			private static final long serialVersionUID = 224321416113268089L;
+
+			@Override
+			protected Iterator<Simulation.DBObject> getItemModels() {
+
+				List<Simulation.DBObject> simObjects = wa.sim
+						.getSimulationObjects();
+
+				Iterator<Simulation.DBObject> simObjectsIt = (Iterator<Simulation.DBObject>) simObjects
+						.iterator();
+
+				// We loop over here to find what the nextFreeHunterID is (a bit
+				// dirty but hey)
+				nextFreeHunterID = 100;
+
+				while (simObjectsIt.hasNext()) {
+					Simulation.DBObject tmp = simObjectsIt.next();
+					if (tmp.getClassName() != null
+							&& tmp.getClassName().equals("Hunter")
+							&& tmp.getID() == nextFreeHunterID) {
+						if (nextFreeHunterID < 105) {
+							nextFreeHunterID++;
+						}
+					}
+				}
+
+				simObjectsIt = (Iterator<Simulation.DBObject>) simObjects
+						.iterator();
+
+				// the iterator returns contact objects, but we need it to
+				// return models, we use this handy adapter class to perform
+				// on-the-fly conversion.
+				return new ModelIteratorAdapter(simObjectsIt) {
+
+					protected IModel model(Object object) {
+
+						return new Model((Simulation.DBObject) object);
+					}
+
+				};
+			}
+
+			@Override
+			protected void populateItem(final Item item) {
+				// TODO Auto-generated method stub
+				final Simulation.DBObject dbo = (Simulation.DBObject) item
+						.getModelObject();
+
+				/*
+				 * if (dbo.getClassName() == "Hunter") { if (dbo.getID() ==
+				 * nextFreeHunterID) { nextFreeHunterID++; } }
+				 */
+
+				item.setModel(new CompoundPropertyModel(dbo));
+
+				item.add(new Label("ID"));
+				item.add(new AjaxEditableLabel("className"));
+				item.add(new AjaxEditableLabel("name"));
+
+				// AjaxLink removeLink = new RemoveLink("remove-link",
+				// listItem);
+				// item.add(this.removeLink("action", item));
+
+				item.add(new Link("action") {
+					private static final long serialVersionUID = 3062106375535388517L;
+
+					/**
+					 * @see org.apache.wicket.markup.html.link.Link#onClick()
+					 */
+					@Override
+					public void onClick() {
+						// nextFreeHunterID--;
+						wa.sim.removeSimulationObjectProperties(dbo.getID());
+						wa.sim.removeSimulationObject(dbo.getID());
+
+						item.modelChanging();
+
+						// Remove item and invalidate listView
+						// getList().remove(item.getModelObject());
+
+						simObjectList.modelChanged();
+						simObjectList.removeAll();
+					}
+				});
+			}
+		};
+
+
+		add(headerContainer.setOutputMarkupId(true));
+
+		simObjectListContainer.add(simObjectList);
+		simObjectListContainer.add(new AjaxEditableLabel("newHunterName") {
+
+			private static final long serialVersionUID = -4665687963234843358L;
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target) {
+				super.onSubmit(target);
+
+				simObjectList.modelChanged();
+				simObjectList.removeAll();
+
+				target.addComponent(simObjectListContainer);
+			}
+		});
+
+		add(simObjectListContainer.setOutputMarkupId(true));
+
+		simulation_select = new DropDownChoice("sim_select", simulationObjectsModel,
+				new IChoiceRenderer() {
+					private static final long serialVersionUID = -1198332012236064483L;
+
+					public Object getDisplayValue(Object obj) {
+						Simulation.SimulationObject c = (Simulation.SimulationObject) obj;
+						if (newSimID == c.getID())
+						{
+							//selectSimulationObject = c;
+							System.out.println("!!!! Matched Simulation Object: "+c);
+						}
+						return c.getID() + " - " + c.getName();
+					}
+
+					public String getIdValue(Object obj, int index) {
+						Simulation.SimulationObject c = (Simulation.SimulationObject) obj;
+						return Integer.toString(c.getID());
+					}
+				});
+
+		// Simulation Management
+		Form form = new Form("form");
+		
+		form.add(simulation_select);
+		//add(form);
+		
+		menuContainer.add(form);
+		
+		add(menuContainer.setOutputMarkupId(true));
+		
+		menuContainer.add(new AjaxEditableLabel("name", new CompoundPropertyModel(selectSimulationObject))
+		{
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target) {
+				// TODO Auto-generated method stub
+				
+				
+				simulation_select.modelChanged();
+				
+				menuContainer.modelChanged();
+				
+				target.addComponent(menuContainer);
+				super.onSubmit(target);
+			}
+			
+			
+		});
+		
+		
+		
+		simulation_select.add(new AjaxFormComponentUpdatingBehavior("onchange")
+		{
+			protected void onUpdate(AjaxRequestTarget target)
+			{
+				// Simulation Change - Need to re-fetch and rebuild everything.
+				
+				// Stop current simulation
+				wa.sim.stop();
+
+				newSimID = selectSimulationObject != null ? selectSimulationObject.getID() : 1;
+
+				// Create new simulation
+				wa.sim = new Simulation();
+
+				// Set the new simulationID
+				wa.sim.setSimulationID(newSimID);
+
+				// Connect to the database
+				wa.sim.connect();
+
+				// Add the default foxes
+				wa.sim.populateWithDefaults();
+
+				// Initialize the simulation
+				wa.sim.initSimulation();
+
+				// Spawn a thread
+				wa.tsim = new Thread(wa.sim);
+				
+				simObjectList.modelChanged();
+				simObjectList.removeAll();
+
+				currentID.modelChanged();
+				currentID.setModelObject(selectSimulationObject.getID());
+				
+				target.addComponent(headerContainer);
+				target.addComponent(simObjectListContainer);
+				
+			}
+		});
+		
+		menuContainer.add(new AjaxLink("sim_new") {
+			private static final long serialVersionUID = 1889736090124423870L;
+
+			public void onClick(AjaxRequestTarget target) {
+				// Stop current simulation
+				wa.sim.stop();
+
+				newSimID = wa.sim.createNewSimulation("Dummy");
+
+				// Create new simulation
+				wa.sim = new Simulation();
+
+				// Set the new simulationID
+				wa.sim.setSimulationID(newSimID);
+
+				// Connect to the database
+				wa.sim.connect();
+
+				// Add the default foxes
+				wa.sim.populateWithDefaults();
+
+				// Initialize the simulation
+				wa.sim.initSimulation();
+
+				// Spawn a thread
+				wa.tsim = new Thread(wa.sim);
+
+				simObjectList.modelChanged();
+				simObjectList.removeAll();
+
+				currentID.modelChanged();
+				currentID.setModelObject(newSimID);
+				
+				simulation_select.modelChanged();
+				
+				headerContainer.modelChanged();
+				simObjectListContainer.modelChanged();
+				menuContainer.modelChanged();
+				
+				
+				target.addComponent(headerContainer);
+				target.addComponent(simObjectListContainer);
+				target.addComponent(menuContainer);
+			}
+		});
+
+		menuContainer.add(new AjaxLink("sim_delete") {
+			private static final long serialVersionUID = 1889736090114423870L;
+
+			public void onClick(AjaxRequestTarget target) {
+				// Stop current simulation
+				wa.sim.stop();
+				
+				if (selectSimulationObject == null || selectSimulationObject.getID() == 1)
+				{
+					return;
+				}
+				
+				wa.sim.removeSimulationObjectsAndProperties(selectSimulationObject.getID());
+				wa.sim.removeSimulation(selectSimulationObject.getID());
+				
+				// Create new simulation (default 1)
+				wa.sim = new Simulation();
+
+				// Calls connect and inits the simulations
+				wa.sim.init();
+
+				// Spawn a thread
+				wa.tsim = new Thread(wa.sim);
+				
+				
+				// Fix our stuff so that everything that needs updating get refreshed
+				
+				// Fetch a new game object list
+				simObjectList.modelChanged();
+				simObjectList.removeAll();
+
+				// The SimulationID for the simulation is 1, so we cheat and get the first simulationobject from the list
+				//selectSimulation = ((List<Simulation.SimulationObject>)simulationObjectsModel.getObject()).get(0);
+				
+				currentID.modelChanged();
+				currentID.setModelObject(1);
+				
+				//
+				simulation_select.modelChanged();
+				
+				// Inform the containers that their object have changed
+				headerContainer.modelChanged();
+				simObjectListContainer.modelChanged();
+				menuContainer.modelChanged();
+				
+				// Add the new containes to our ajax-return
+				target.addComponent(headerContainer);
+				target.addComponent(simObjectListContainer);
+				target.addComponent(menuContainer);
+
+			}
+		});
+
+		// Simulation Control
+
+		menuContainer.add(new Link("reset") {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1889736090124447870L;
+
+			public void onClick() {
+				// Stop current simulation
+				wa.sim.stop();
+
+				// Create new simulation
+				wa.sim = new Simulation();
+
+				// Set the new simulationID
+				wa.sim.setSimulationID(newSimID);
+
+				// Initialize the simulation
+				wa.sim.init();
+
+				// Spawn a thread
+				wa.tsim = new Thread(wa.sim);
+
+			}
+		});
+
+		menuContainer.add(new Link("start") {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -798662914318035568L;
+
+			public void onClick() {
+				// Start the simulation
+				wa.tsim.start();
+			}
+		});
+
+		menuContainer.add(new Link("stop") {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 7960737184037623955L;
+
+			public void onClick() {
+				wa.sim.stop();
+			}
+		});
+
+		menuContainer.add(new Link("randomize") {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -8554752174558803355L;
+
+			public void onClick() {
+				wa.sim.randomizeFoxesAndUpdate();
+			}
+		});
+
+		// Add the simplest type of label
+		menuContainer.add(new BookmarkablePageLink("linkToGetConfig", GetConfig.class));
+		menuContainer.add(new BookmarkablePageLink("linkToGetState", GetState.class));
+		//add(new Label("message", "Number of gameObjects in simulation: "
+		//		+ Integer.toString(wa.sim.world.gameObjects.size())));
+
+	}
+
+	public Simulation.SimulationObject getSim_select() {
+		return this.selectSimulationObject;
+	}
+	
+	public void setSim_select(Simulation.SimulationObject selectedMake) {
+		this.selectSimulationObject = selectedMake;
+	}
+
+	// This method is called when we update the newHunter field
+	public void setNewHunterName(String name) {
+		// This isn't really the optimal way I think :P
+		Simulation.DBObject newDBO = wa.sim.new DBObject(nextFreeHunterID,
+				"Hunter", name);
+
+		newDBO.addToSimulation();
+		newDBO.setName(name);
+
+		// simObjects = wa.sim.getSimulationObjects();
+
+	}
+
+	// This method is called for a blank newHunter field
+	public String getNewHunterName() {
+		return null;
+	}
+}

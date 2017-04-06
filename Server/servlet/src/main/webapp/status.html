@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Foxhunt WebClient</title>
+	<!-- meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  -->
+    <style type="text/css" media="all">
+    .mapLabel, .mapLabelSelected {
+          color: white;
+          font-size: 0.7em;
+          font-weight: bold;
+          padding: 0.2em;
+          white-space: nowrap;
+          /*display: table-cell;*/
+          float: left;
+        }
+
+        .mapLabel {
+          opacity: 0.7;
+          background-color:#2675A2;
+        }
+        
+        #status {
+          background: #eeeeee;
+          padding: 10px;
+          font-size: 80%;
+          position: absolute;
+          top: 60px;
+          right: 10px;
+          z-index: 1000;
+          border: 2px solid grey;
+        }
+        
+        #heading {
+  position: absolute;
+  top: 450px;
+  left: 100px;
+  z-index: 1;
+  font-size: 3em;
+  border: 1px solid grey;
+  z-index: 1000;
+  background: white;
+  padding: 10px;
+}
+        
+        
+    </style>
+	
+	<script src="./proj4js/lib/proj4js-combined.js"></script>
+	<script src="./proj4js/lib/defs/EPSG32633.js"></script >
+		
+	<!-- bring in the OpenLayers javascript library
+	 (here we bring it from the remote site, but you could
+	 easily serve up this javascript yourself) -->
+	<script src="./OpenLayers-2.7/OpenLayers.js"></script>
+	
+	<!-- bring in the OpenStreetMap OpenLayers layers.
+	 Using this hosted file will make sure we are kept up
+	 to date with any necessary changes -->
+	<!-- <script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script> -->
+	
+	<script type="text/javascript" src="./prototype-1.6.0.3.js"></script>
+	<script type="text/javascript" src="foxhunt.js"></script>
+	
+</head>
+
+<!-- body.onload is called once the page is loaded (call the 'init' function) -->
+<body onload="foxhunt.init();">
+
+    <!-- define a DIV into which the map will appear. Make it take up the whole window -->
+    <div style="width:100%; height:100%" id="map"></div>
+    
+    <!--
+    <h2 id="heading">
+        Bli med p&aring; revejakt!
+    </h2>
+    -->
+    
+    <div id="status">
+		<h1>Poengtavle</h1>
+		<table id="scores" border="1">
+			<tr>
+			<!--<th>Id</th> -->
+			<th>Navn</th><th>Fangst</th></tr>
+		</table>
+    </div>
+    
+
+</body>
+
+</html>
+

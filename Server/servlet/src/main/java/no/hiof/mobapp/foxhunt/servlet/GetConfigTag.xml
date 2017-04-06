@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<?access-control allow="*"?>
+<game xmlns:wicket="http://www.w3.org/1999/xhtml">
+	<game_info>
+		<name>Tag</name>
+		<boundry wicket:id="boundary" ltmin="59" lnmin="11" ltmax="59" lnmax="11"></boundry>
+		<requestID wicket:id="message">message will be here</requestID>
+	</game_info>
+	
+	<settings>
+	   <display wicket:id="displaysettings" catchrange="0" gps="0" opponents="1" points="1" />
+	</settings>
+
+    <gameObjects>
+		<gameObject wicket:id="gameObject">
+		</gameObject>
+	</gameObjects>
+</game>

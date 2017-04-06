@@ -1,0 +1,5 @@
+no\hiof\mobapp\foxhunt\game\behavior\world\DefaultWorldBehavior.class
+no\hiof\mobapp\foxhunt\game\behavior\individual\TagPlayerAndHunter.class
+no\hiof\mobapp\foxhunt\game\behavior\world\Tag.class
+no\hiof\mobapp\foxhunt\game\behavior\individual\DefaultGameObjectBehavior.class
+no\hiof\mobapp\foxhunt\game\behavior\individual\DummyGameObjectBehavior.class
