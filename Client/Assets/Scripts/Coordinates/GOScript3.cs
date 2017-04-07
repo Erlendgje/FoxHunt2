@@ -14,12 +14,14 @@ public class GOScript3 : MonoBehaviour {
     public GameObject gameManager;
     private GameManager3 gmScript;
     private bool first;
+	public bool taken;
 
 	//Finding GameManager
     private void Awake() {
         gameManager = GameObject.FindGameObjectWithTag("GameManager");
         gmScript = gameManager.GetComponent<GameManager3>();
         first = true;
+		taken = false;
     }
 
     // Use this for initialization

@@ -64,6 +64,14 @@ public class GameManager3 : MonoBehaviour {
 		buttons = new List<GameObject>();
 
 		int counter = 1;
+		int buttonCounter = 0;
+
+		foreach (KeyValuePair<int, GameObject> go in gameObjects) {
+			if (go.Value.tag == "Hunter") {
+				buttonCounter++;
+			}
+		}
+		
 
 		foreach (KeyValuePair<int, GameObject> go in gameObjects) {
 			if(go.Value.tag == "Hunter") {
@@ -72,9 +80,16 @@ public class GameManager3 : MonoBehaviour {
 				temp.transform.SetParent(canvas.transform);
 				temp.GetComponent<RectTransform>().sizeDelta = new Vector2(canvas.GetComponent<RectTransform>().rect.width - 10, 50);
 				temp.transform.localScale = new Vector3(1, 1, 1);
-				temp.GetComponent<RectTransform>().localPosition = new Vector3(0, (canvas.GetComponent<RectTransform>().rect.height/ 2) - (temp.GetComponent<RectTransform>().rect.height * counter), 0);
+				temp.GetComponent<RectTransform>().localPosition = new Vector3(0, ((temp.GetComponent<RectTransform>().rect.height) * (buttonCounter / 2)) - ((temp.GetComponent<RectTransform>().rect.height + 5) * counter), 0);
+
 				temp.GetComponentInChildren<Text>().text = go.Value.GetComponent<GOScript3>().name;
 				temp.GetComponent<Button>().onClick.AddListener(() => ButtonClick(go.Key));
+
+
+				if (go.Value.GetComponent<GOScript3>().taken == true) {
+					temp.GetComponent<Button>().interactable = false;
+				}
+
 				buttons.Add(temp);
 
 				counter++;
