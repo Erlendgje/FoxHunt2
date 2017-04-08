@@ -36,11 +36,12 @@ public class GameManager3 : MonoBehaviour {
     //Objects
     public GameObject serverHandler;
     public GameObject tile;
-	public GameObject tree;
 	public GameObject cam;
 	public GameObject button;
 	public GameObject canvas;
 	public List<GameObject> buttons;
+	public List<GameObject> prefabs;
+	public Material grass;
 
     public Dictionary<int, GameObject> gameObjects;
     public Dictionary<int, TextMesh> scores;
@@ -174,6 +175,7 @@ public class GameManager3 : MonoBehaviour {
 
 		//Creating map/tile
         tile = GameObject.CreatePrimitive(PrimitiveType.Plane);
+		tile.GetComponent<MeshRenderer>().material = grass;
         tile.transform.localScale = new Vector3(Vector3.one.x + scale * (float)coordinateMapWidth, Vector3.one.y, Vector3.one.z + scale * (float)coordinateMapHeight);
         inGameMapHeight = tile.GetComponent<Renderer>().bounds.size.x;
         inGameMapWidth = tile.GetComponent<Renderer>().bounds.size.z;
@@ -204,11 +206,11 @@ public class GameManager3 : MonoBehaviour {
 
 			//How long the fence should be and how far it should be between each object.
 			difference = Vector3.Distance(corner1, corner2);
-			differenceX = Math.Abs(corner1.x - corner2.x) / (difference / 2);
-			differenceY = Math.Abs(corner1.z - corner2.z) / (difference / 2);
+			differenceX = Math.Abs(corner1.x - corner2.x) / (difference / 4);
+			differenceY = Math.Abs(corner1.z - corner2.z) / (difference / 4);
 
 			//Making the fence
-			for (int k = 0; k < difference/2; k++) {
+			for (int k = 0; k < difference/4; k++) {
 
 				float x = 0;
 				float y = 0;
@@ -224,7 +226,10 @@ public class GameManager3 : MonoBehaviour {
 				}else {
 					y = corner1.z + differenceY * k + (UnityEngine.Random.Range(-0.5f, 0.5f));
 				}
-				Instantiate(tree, new Vector3(x, 0.5f, y), transform.rotation);
+
+				int random = UnityEngine.Random.Range(0, prefabs.Count);
+
+				Instantiate(prefabs[random], new Vector3(x, prefabs[random].GetComponent<Renderer>().bounds.size.y / 2, y), transform.rotation);
 			}
 		}
 	}
