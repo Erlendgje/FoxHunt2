@@ -64,6 +64,11 @@ public class GetState extends WebPage {
 				if (h != null)
 				{
 					h.setLocation(parameters.getDouble("lat"), parameters.getDouble("lon"));
+					
+					if(!h.isTaken()){
+						h.setTaken(true);
+					}
+					
 				}
 			}	
 		}		

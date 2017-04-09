@@ -54,6 +54,8 @@ public abstract class GameObject implements IDatabaseObject{
     
     protected HashMap<String, String> config;
     
+    private boolean taken = false;
+    
 
     
 	@SuppressWarnings("unchecked")
@@ -399,6 +401,14 @@ public abstract class GameObject implements IDatabaseObject{
 	 */
 	public boolean isHidden() {
 		return hidden;
+	}
+	
+	public boolean isTaken(){
+		return taken;
+	}
+	
+	public void setTaken(boolean taken){
+		this.taken = taken;
 	}
 	/**
 	 * @param hidden the hidden to set

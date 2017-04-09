@@ -48,6 +48,7 @@ public class GameManager3 : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+
         gameObjects = new Dictionary<int, GameObject>();
         scores = new Dictionary<int, TextMesh>();
         //Getting server settings and starting constant update
@@ -114,8 +115,7 @@ public class GameManager3 : MonoBehaviour {
 		}
 		catch {
 
-		}
-			
+		}		
     }
 
     public void UpdateScore(int id, int score, string name)
