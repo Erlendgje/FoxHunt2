@@ -36,13 +36,14 @@ public class GOScript3 : MonoBehaviour {
 
 
 	//Set values and moving the gameobject
-    public void SetValues(decimal lt, decimal ln, int id, int score, string name) {
+    public void SetValues(decimal lt, decimal ln, int id, int score, string name, bool taken) {
 
 
 		//bug.Log(lt + ", " + ln + ", " + this.name);
 
         this.id = id;
         this.score = score;
+		this.taken = taken;
 
 		if(this.name == "") {
 			this.name = name;

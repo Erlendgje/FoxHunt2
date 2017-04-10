@@ -90,6 +90,8 @@ public class GameManager3 : MonoBehaviour {
 
 				if (go.Value.GetComponent<GOScript3>().taken == true) {
 					temp.GetComponent<Button>().interactable = false;
+					temp.GetComponentInChildren<Animation>().enabled = false;
+					temp.GetComponentInChildren<Animator>().enabled = false;
 				}
 
 				buttons.Add(temp);
@@ -181,11 +183,16 @@ public class GameManager3 : MonoBehaviour {
         inGameMapWidth = tile.GetComponent<Renderer>().bounds.size.z;
         tile.transform.position = new Vector3(inGameMapHeight/2, 0, inGameMapWidth/2);
 		//Increasing tile size so camera cant see outside the map
-		tile.transform.localScale = new Vector3(tile.transform.localScale.x + 4, Vector3.one.y, tile.transform.localScale.z + 4);
+		tile.transform.localScale = new Vector3(tile.transform.localScale.x + 2, Vector3.one.y, tile.transform.localScale.z + 2);
 
+		Vector2[] polygonArray = new Vector2[boundary.Length / 2];
+		for (int i = 0; i < boundary.Length / 2; i++) {
+			Vector3 temp = MakeVector((float)boundary[1, i], (float)boundary[0, i]);
+			polygonArray[i] = new Vector2(temp.x, temp.z);
+		}
 
 		//Making a fence around the map
-		for(int i = 0; i < boundary.Length/2; i++) {
+		for (int i = 0; i < boundary.Length/2; i++) {
 
 			Vector3 corner1;
 			Vector3 corner2;
@@ -206,11 +213,11 @@ public class GameManager3 : MonoBehaviour {
 
 			//How long the fence should be and how far it should be between each object.
 			difference = Vector3.Distance(corner1, corner2);
-			differenceX = Math.Abs(corner1.x - corner2.x) / (difference / 4);
-			differenceY = Math.Abs(corner1.z - corner2.z) / (difference / 4);
+			differenceX = Math.Abs(corner1.x - corner2.x) / (difference / 3);
+			differenceY = Math.Abs(corner1.z - corner2.z) / (difference / 3);
 
 			//Making the fence
-			for (int k = 0; k < difference/4; k++) {
+			for (int k = 0; k < difference/3; k++) {
 
 				float x = 0;
 				float y = 0;
@@ -229,12 +236,48 @@ public class GameManager3 : MonoBehaviour {
 
 				int random = UnityEngine.Random.Range(0, prefabs.Count);
 
-				Instantiate(prefabs[random], new Vector3(x, prefabs[random].GetComponent<Renderer>().bounds.size.y / 2, y), transform.rotation);
+
+
+				Instantiate(prefabs[random], new Vector3(x, prefabs[random].GetComponent<Renderer>().bounds.size.y / 2, y), Quaternion.Euler(new Vector3(0, UnityEngine.Random.Range(0, 360),0)));
+
+				
+				CreateForest(polygonArray);
 			}
 		}
 	}
 
-    public void SetGameOver(bool gameOver) {
+	public void CreateForest(Vector2[] PolygonArray) {
+
+		float randomX = UnityEngine.Random.Range (tile.transform.position.x - tile.GetComponent<Renderer>().bounds.size.x / 2, tile.transform.position.x + tile.GetComponent<Renderer>().bounds.size.x / 2);
+		float randomZ = UnityEngine.Random.Range (tile.transform.position.z - tile.GetComponent<Renderer>().bounds.size.z / 2, tile.transform.position.z + tile.GetComponent<Renderer>().bounds.size.z / 2);
+
+		int random = UnityEngine.Random.Range(0, prefabs.Count);
+		Vector3 randomPosition = new Vector3 (randomX, prefabs[random].GetComponent<Renderer>().bounds.size.y / 2, randomZ);
+
+		if (!ContainsPoint(PolygonArray, new Vector2(randomX, randomZ))) {
+			Instantiate(prefabs[random], randomPosition, Quaternion.Euler(new Vector3(0, UnityEngine.Random.Range(0, 360), 0)));
+		}
+		else {
+			
+			CreateForest(PolygonArray);
+		}
+		
+	}
+
+	public bool ContainsPoint(Vector2[] polyPoints, Vector2 p) {
+		int j = polyPoints.Length - 1;
+		bool inside = false;
+
+		for (var i = 0; i < polyPoints.Length; j = i++) {
+			if (((polyPoints[i].y <= p.y && p.y < polyPoints[j].y) || (polyPoints[j].y <= p.y && p.y < polyPoints[i].y)) &&
+			   (p.x < (polyPoints[j].x - polyPoints[i].x) * (p.y - polyPoints[i].y) / (polyPoints[j].y - polyPoints[i].y) + polyPoints[i].x)) {
+				inside = !inside;
+			}
+		}
+		return inside;
+	}
+
+	public void SetGameOver(bool gameOver) {
 
         this.gameOver = gameOver;
 

@@ -49,9 +49,14 @@ public class GetData3 : MonoBehaviour {
 
 	public void getConfig() {
 
-        string url = "http://asia.hiof.no/foxhunt-servlet/getConfig";
+		//string url = "http://asia.hiof.no/foxhunt-servlet/getConfig";
 
-        XmlDocument xmlData = new XmlDocument();
+		lt = Input.location.lastData.latitude;
+		ln = Input.location.lastData.longitude;
+		string url = "localhost:8080/getConfig" + gameManager.GetComponent<GameManager3>().userID + "&lat=" + lt + "&lon=" + ln;
+		//string url = "http://localhost:8080/getConfig?userid=" + gameManager.GetComponent<GameManager3>().userID + "&lat=" + lt + "&lon=" + ln;
+
+		XmlDocument xmlData = new XmlDocument();
         xmlData.Load(url);
 
 
@@ -121,8 +126,8 @@ public class GetData3 : MonoBehaviour {
 		lt = Input.location.lastData.latitude;
 		ln = Input.location.lastData.longitude;
 		string url = "http://asia.hiof.no/foxhunt-servlet/getState?userid=" + gameManager.GetComponent<GameManager3>().userID + "&lat=" + lt + "&lon=" + ln;
-
-        XmlDocument xmlData = new XmlDocument();
+		//string url = "http://localhost:8080/getState?userid=" + gameManager.GetComponent<GameManager3>().userID + "&lat=" + lt + "&lon=" + ln;
+		XmlDocument xmlData = new XmlDocument();
         xmlData.Load(url);
 
 
@@ -154,6 +159,7 @@ public class GetData3 : MonoBehaviour {
             int id = int.Parse(gameObject.Attributes["id"].Value);
 			string name = "";
 			int score = 0;
+			bool taken = false;
 			try {
 				score = int.Parse(gameObject.Attributes["caught"].Value);
 			}
@@ -163,6 +169,7 @@ public class GetData3 : MonoBehaviour {
 
 			try {
 				name = gameObject.Attributes["name"].Value;
+				taken = bool.Parse(gameObject.Attributes["taken"].Value);
 			}
 			catch {
 
@@ -172,7 +179,7 @@ public class GetData3 : MonoBehaviour {
 
             gameManager.GetComponent<GameManager3>().gameObjects.TryGetValue(id, out tempGO);
 
-            tempGO.GetComponent<GOScript3>().SetValues(lt, ln, id, score, name);
+            tempGO.GetComponent<GOScript3>().SetValues(lt, ln, id, score, name, taken);
         }
     }
 }
