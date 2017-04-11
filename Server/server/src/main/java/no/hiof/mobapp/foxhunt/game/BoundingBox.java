@@ -73,7 +73,7 @@ public class BoundingBox {
 			c_b = cords[0];
 		
 			for (int i = 0; i < cords.length; i++)
-				if (cords[i].lat < c_l.lat)
+				if (cords[i].lat < c_b.lat)
 					c_b = cords[i];
 		}
 		
@@ -83,7 +83,7 @@ public class BoundingBox {
 	public LatLongCoord getRandomPointInside() {
 		double newlon = getPointLeft().lon + Math.random()*(getPointRight().lon - getPointLeft().lon);
 		double newlat = getPointBottom().lat + Math.random()*(getPointTop().lat -getPointBottom().lat);
-		
+		System.out.print("HEI");
 		return new LatLongCoord(newlat,newlon);
 		
 	}

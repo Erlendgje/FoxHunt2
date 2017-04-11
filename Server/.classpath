@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="server/src/main/java"/>
+	<classpathentry kind="src" path="servlet/src/main/java"/>
+	<classpathentry kind="lib" path="server/target/SimulationServer-1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="server/target/classes"/>
+</classpath>
