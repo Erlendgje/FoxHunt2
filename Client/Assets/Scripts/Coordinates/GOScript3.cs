@@ -9,7 +9,8 @@ public class GOScript3 : MonoBehaviour {
     public decimal lt, ln;
     public int id;
 	public string name;
-    private float speed = 50f;
+    private float speed = 2f;
+	private float rotationSpeed = 5f;
     public int score;
     public GameObject gameManager;
     private GameManager3 gmScript;
@@ -31,8 +32,10 @@ public class GOScript3 : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        
-    }
+
+		
+
+	}
 
 
 	//Set values and moving the gameobject
@@ -54,19 +57,39 @@ public class GOScript3 : MonoBehaviour {
 			gmScript.UpdateScore(id, score, this.name);
         }
 
-        //Checking if object is located on the field irl
-        if (lt < gmScript.northernmostPoint && lt > gmScript.southernmosttPoint && ln < gmScript.easternmostPoint && ln > gmScript.westernmostPoint) {
-            this.lt = lt;
+		
+
+		
+
+		//Checking if object is located on the field irl
+		if (lt < gmScript.northernmostPoint && lt > gmScript.southernmosttPoint && ln < gmScript.easternmostPoint && ln > gmScript.westernmostPoint) {
+
+			this.lt = lt;
             this.ln = ln;
 
+			Vector3 temp = gmScript.MakeVector((float)ln, (float)lt);
 			//If its first time to enter field, teleport object to position
-            if (first == true) {
+			if (first == true) {
 				transform.position = gmScript.MakeVector((float)ln, (float)lt);
                 first = false;
             }
             this.GetComponent<Renderer>().enabled = true;
-            transform.position = Vector3.MoveTowards(transform.position, gmScript.MakeVector((float)ln, (float)lt), speed * Time.deltaTime);
-        }
+
+			if (this.CompareTag("Fox")) {
+
+				float rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg + 90;
+
+				if(rotation < 0) {
+					rotation = 360 + rotation;
+				}
+
+				transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, rotation, 0), rotationSpeed);
+			}
+
+
+			transform.position = Vector3.MoveTowards(transform.position, temp, speed * Time.deltaTime);
+			
+		}
         else {
             this.GetComponent<Renderer>().enabled = false;
 			first = true;

@@ -151,12 +151,13 @@ public class GetData3 : MonoBehaviour {
     public void getGameObjects(XmlNodeList gameObjects) {
 
 
-        //Getting value from XMLNode and set the value in GOScript
-        foreach (XmlNode gameObject in gameObjects) {
+		//Getting value from XMLNode and set the value in GOScript
+		foreach (XmlNode gameObject in gameObjects) {
 
-            decimal ln = decimal.Parse(gameObject.Attributes["ln"].Value);
-            decimal lt = decimal.Parse(gameObject.Attributes["lt"].Value);
-            int id = int.Parse(gameObject.Attributes["id"].Value);
+			decimal ln = decimal.Parse(gameObject.Attributes["ln"].Value);
+			decimal lt = decimal.Parse(gameObject.Attributes["lt"].Value);
+			int id = int.Parse(gameObject.Attributes["id"].Value);
+			int rotation = int.Parse(gameObject.Attributes["rotation"].Value);
 			string name = "";
 			int score = 0;
 			bool taken = false;
