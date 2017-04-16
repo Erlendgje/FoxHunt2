@@ -99,7 +99,6 @@ public class GetConfig extends WebPage {
 				item.add(new AttributeModifier("groupid", true, new Model(Integer.toString(go.getGroupID()))));
 				item.add(new AttributeModifier("class", true, new Model(go.getConfigValue("ClassName"))));
 				item.add(new AttributeModifier("name", true, new Model(go.getConfigValue("name"))));
-				item.add(new AttributeModifier("rotation", true, new Model(go.getTheta())));
 				item.add(new AttributeModifier("taken", true, new Model(go.isTaken())));
 				item.add(new AttributeModifier("lt", true, new Model(Double.toString(go.getLocation().lat))));
 				item.add(new AttributeModifier("ln", true, new Model(Double.toString(go.getLocation().lon))));

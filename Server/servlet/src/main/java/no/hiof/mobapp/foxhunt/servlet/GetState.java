@@ -104,7 +104,7 @@ public class GetState extends WebPage {
 				// General attributes valid for all gameObjects
 				item.add(new AttributeModifier("id", true, new Model(Integer.toString(go.dbObjectID))));
 				item.add(new AttributeModifier("class", true, new Model(go.getConfigValue("ClassName"))));
-				item.add(new AttributeModifier("rotation", true, new Model(go.getTheta())));
+				item.add(new AttributeModifier("taken", true, new Model(go.isTaken())));
 				
 				item.add(new AttributeModifier("lt", true, new Model(gpscoord.format(go.getLocation().lat))));
 				item.add(new AttributeModifier("ln", true, new Model(gpscoord.format(go.getLocation().lon))));

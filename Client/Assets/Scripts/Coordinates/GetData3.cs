@@ -143,13 +143,20 @@ public class GetData3 : MonoBehaviour {
 
 		//Updateing each gameobject
         getGameObjects(gameObjects);
-    }
+
+		try {
+			gameManager.GetComponent<GameManager3>().UpdateButtons();
+		}
+		catch {
+
+		}
+		
+	}
 
 
 
 	//Updating gameobjects
     public void getGameObjects(XmlNodeList gameObjects) {
-
 
 		//Getting value from XMLNode and set the value in GOScript
 		foreach (XmlNode gameObject in gameObjects) {
@@ -157,10 +164,9 @@ public class GetData3 : MonoBehaviour {
 			decimal ln = decimal.Parse(gameObject.Attributes["ln"].Value);
 			decimal lt = decimal.Parse(gameObject.Attributes["lt"].Value);
 			int id = int.Parse(gameObject.Attributes["id"].Value);
-			int rotation = int.Parse(gameObject.Attributes["rotation"].Value);
+			bool taken = bool.Parse(gameObject.Attributes["taken"].Value);
 			string name = "";
 			int score = 0;
-			bool taken = false;
 			try {
 				score = int.Parse(gameObject.Attributes["caught"].Value);
 			}
@@ -170,7 +176,6 @@ public class GetData3 : MonoBehaviour {
 
 			try {
 				name = gameObject.Attributes["name"].Value;
-				taken = bool.Parse(gameObject.Attributes["taken"].Value);
 			}
 			catch {
 
@@ -182,5 +187,8 @@ public class GetData3 : MonoBehaviour {
 
             tempGO.GetComponent<GOScript3>().SetValues(lt, ln, id, score, name, taken);
         }
+
+		gameManager.GetComponent<GameManager3>().checkScore();
+
     }
 }

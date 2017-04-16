@@ -20,6 +20,7 @@ public class GameManager3 : MonoBehaviour {
     public float inGameMapWidth;
     public float scale;
 	public int userID;
+	public int position;
 
 	//Game settings from server
     public double catchrange;
@@ -28,10 +29,8 @@ public class GameManager3 : MonoBehaviour {
     public bool points;
     public bool gameOver;
 
-    public string date;
-    public string highScore;
-
     public Text scoreText;
+	public Text nextScore;
 
     //Objects
     public GameObject serverHandler;
@@ -48,7 +47,7 @@ public class GameManager3 : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-
+		position = 0;
         gameObjects = new Dictionary<int, GameObject>();
         scores = new Dictionary<int, TextMesh>();
         //Getting server settings and starting constant update
@@ -56,9 +55,6 @@ public class GameManager3 : MonoBehaviour {
         serverHandler.GetComponent<GetData3>().startUpdate();
 
 		createButtons();
-
-        //Henter dato den dagen
-        date = System.DateTime.Now.Date.ToString();
     }
 
 	void createButtons() {
@@ -106,6 +102,22 @@ public class GameManager3 : MonoBehaviour {
 
 		foreach (GameObject go in buttons) {
 			Destroy(go);
+		}
+	}
+
+	public void UpdateButtons() {
+
+		int counter = 0;
+
+		foreach(KeyValuePair<int, GameObject> go in gameObjects) {
+			if(go.Value.tag == "Hunter") {
+				if (go.Value.GetComponent<GOScript3>().taken) {
+					buttons[counter].GetComponent<Button>().interactable = false;
+					buttons[counter].GetComponentInChildren<Animation>().enabled = false;
+					buttons[counter].GetComponentInChildren<Animator>().enabled = false;
+				}
+				counter++;
+			}
 		}
 	}
 
@@ -283,51 +295,6 @@ public class GameManager3 : MonoBehaviour {
 
     }
 
-    public void AddGameObject() {
-
-    }
-    //Saving high score
-    public void saveHighScore()
-    {
-        //If high score file don't exist, make one
-        if (!File.Exists(Application.persistentDataPath + "/playerHighScore.dat")){
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Create(Application.persistentDataPath + "/playerHighScore.dat");
-            highScore = scores.ToString() + date  + "\n";
-
-            bf.Serialize(file, highScore);
-            file.Close();
-        }
-        else
-        {
-            //If it exists, update the file
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/playerHighScore.dat", FileMode.Open);
-            
-            highScore = scores.ToString() + date + "\n";
-            bf.Serialize(file, highScore);
-            file.Close();
-        }
-
-        
-
-    }
-    //Loading high score
-    //Dette må vel flyttes til en annen script, der den loader high scoren
-    public void loadHighscore()
-    {
-        if (File.Exists(Application.persistentDataPath + "/playerHighScore.dat"))
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/playerHighScore.dat", FileMode.Open);
- 
-            highScore = bf.Deserialize(file).ToString();
-            file.Close();
-
-        }
-
-    }
-
 	//Konverting irl coordinates to Vector3
 	public Vector3 MakeVector(float ln, float lt) {
 		float z = ((float)easternmostPoint - ln) * (inGameMapWidth / (float)coordinateMapWidth);
@@ -335,4 +302,46 @@ public class GameManager3 : MonoBehaviour {
 		return new Vector3(x, 0, z);
 	}
 
+	public void checkScore() {
+		if(userID != 0) {
+			int nextScore = 0;
+			bool first = true;
+			position = 0;
+
+			foreach (KeyValuePair<int, GameObject> go in gameObjects) {
+				if(go.Value.tag == "Hunter") {
+
+					if (gameObjects[userID].GetComponent<GOScript3>().score < go.Value.GetComponent<GOScript3>().score) {
+						if(nextScore < go.Value.GetComponent<GOScript3>().score) {
+							nextScore = go.Value.GetComponent<GOScript3>().score;
+						}
+					}
+
+					if (go.Value.GetComponent<GOScript3>().score > gameObjects[userID].GetComponent<GOScript3>().score) {
+						position++;
+					}
+				}
+			}
+
+			switch (position) {
+				case 0:
+					break;
+				case 1:
+					this.nextScore.text = "1st place: " + nextScore;
+					break;
+				case 2:
+					this.nextScore.text = "2nd place: " + nextScore;
+					break;
+				case 3:
+					this.nextScore.text = "3rd place: " + nextScore;
+					break;
+				case 4:
+					this.nextScore.text = "4th place: " + nextScore;
+					break;
+				case 5:
+					this.nextScore.text = "5th place: " + nextScore;
+					break;
+			}
+		}
+	}
 }
