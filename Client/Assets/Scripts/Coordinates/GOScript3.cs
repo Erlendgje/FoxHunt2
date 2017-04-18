@@ -9,7 +9,7 @@ public class GOScript3 : MonoBehaviour {
     public decimal lt, ln;
     public int id;
 	public string name;
-    private float speed = 2f;
+    private float speed = 5f;
 	private float rotationSpeed = 5f;
     public int score;
     public GameObject gameManager;
@@ -41,9 +41,6 @@ public class GOScript3 : MonoBehaviour {
 	//Set values and moving the gameobject
     public void SetValues(decimal lt, decimal ln, int id, int score, string name, bool taken) {
 
-
-		//bug.Log(lt + ", " + ln + ", " + this.name);
-
         this.id = id;
         this.score = score;
 		this.taken = taken;
@@ -56,10 +53,6 @@ public class GOScript3 : MonoBehaviour {
         {
 			gmScript.UpdateScore(id, score, this.name);
         }
-
-		
-
-		
 
 		//Checking if object is located on the field irl
 		if (lt < gmScript.northernmostPoint && lt > gmScript.southernmosttPoint && ln < gmScript.easternmostPoint && ln > gmScript.westernmostPoint) {
@@ -75,6 +68,7 @@ public class GOScript3 : MonoBehaviour {
             }
             this.GetComponent<Renderer>().enabled = true;
 
+			//Rotating the foxes
 			if (this.CompareTag("Fox")) {
 
 				float rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg + 90;

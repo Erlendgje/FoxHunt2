@@ -29,8 +29,7 @@ public class GameManager3 : MonoBehaviour {
     public bool points;
     public bool gameOver;
 
-    public Text scoreText;
-	public Text nextScore;
+    
 
     //Objects
     public GameObject serverHandler;
@@ -41,8 +40,10 @@ public class GameManager3 : MonoBehaviour {
 	public List<GameObject> buttons;
 	public List<GameObject> prefabs;
 	public Material grass;
+	public Text scoreText;
+	public Text nextScore;
 
-    public Dictionary<int, GameObject> gameObjects;
+	public Dictionary<int, GameObject> gameObjects;
     public Dictionary<int, TextMesh> scores;
 
     // Use this for initialization
@@ -57,10 +58,12 @@ public class GameManager3 : MonoBehaviour {
 		createButtons();
     }
 
+	//Creates buttons from how many players available
 	void createButtons() {
 
 		buttons = new List<GameObject>();
 
+		//Checks how many buttons we need
 		int counter = 1;
 		int buttonCounter = 0;
 
@@ -71,6 +74,7 @@ public class GameManager3 : MonoBehaviour {
 		}
 		
 
+		//Creating the buttons
 		foreach (KeyValuePair<int, GameObject> go in gameObjects) {
 			if(go.Value.tag == "Hunter") {
 
@@ -84,6 +88,7 @@ public class GameManager3 : MonoBehaviour {
 				temp.GetComponent<Button>().onClick.AddListener(() => ButtonClick(go.Key));
 
 
+				//Checks if player is available
 				if (go.Value.GetComponent<GOScript3>().taken == true) {
 					temp.GetComponent<Button>().interactable = false;
 					temp.GetComponentInChildren<Animation>().enabled = false;
@@ -105,6 +110,7 @@ public class GameManager3 : MonoBehaviour {
 		}
 	}
 
+	//Checks the players available
 	public void UpdateButtons() {
 
 		int counter = 0;
@@ -132,6 +138,7 @@ public class GameManager3 : MonoBehaviour {
 		}		
     }
 
+	//Update the score of a player
     public void UpdateScore(int id, int score, string name)
     {
         TextMesh temp;
@@ -198,13 +205,15 @@ public class GameManager3 : MonoBehaviour {
 		tile.transform.localScale = new Vector3(tile.transform.localScale.x + 2, Vector3.one.y, tile.transform.localScale.z + 2);
 
 		Vector2[] polygonArray = new Vector2[boundary.Length / 2];
+
 		for (int i = 0; i < boundary.Length / 2; i++) {
+
 			Vector3 temp = MakeVector((float)boundary[1, i], (float)boundary[0, i]);
 			polygonArray[i] = new Vector2(temp.x, temp.z);
 		}
 
-		//Making a fence around the map
-		for (int i = 0; i < boundary.Length/2; i++) {
+			//Making a fence around the map
+			for (int i = 0; i < boundary.Length/2; i++) {
 
 			Vector3 corner1;
 			Vector3 corner2;
@@ -257,25 +266,28 @@ public class GameManager3 : MonoBehaviour {
 			}
 		}
 	}
-
+	//Creating object randomly outside map
 	public void CreateForest(Vector2[] PolygonArray) {
 
+		//Getting random position on the map
 		float randomX = UnityEngine.Random.Range (tile.transform.position.x - tile.GetComponent<Renderer>().bounds.size.x / 2, tile.transform.position.x + tile.GetComponent<Renderer>().bounds.size.x / 2);
 		float randomZ = UnityEngine.Random.Range (tile.transform.position.z - tile.GetComponent<Renderer>().bounds.size.z / 2, tile.transform.position.z + tile.GetComponent<Renderer>().bounds.size.z / 2);
 
+		//Getting random prop
 		int random = UnityEngine.Random.Range(0, prefabs.Count);
 		Vector3 randomPosition = new Vector3 (randomX, prefabs[random].GetComponent<Renderer>().bounds.size.y / 2, randomZ);
 
+		//Checking if randomPosition is inside polygon/map
 		if (!ContainsPoint(PolygonArray, new Vector2(randomX, randomZ))) {
 			Instantiate(prefabs[random], randomPosition, Quaternion.Euler(new Vector3(0, UnityEngine.Random.Range(0, 360), 0)));
 		}
 		else {
-			
 			CreateForest(PolygonArray);
 		}
 		
 	}
 
+	//Function that checks if polygon contains point
 	public bool ContainsPoint(Vector2[] polyPoints, Vector2 p) {
 		int j = polyPoints.Length - 1;
 		bool inside = false;
@@ -288,6 +300,7 @@ public class GameManager3 : MonoBehaviour {
 		}
 		return inside;
 	}
+
 
 	public void SetGameOver(bool gameOver) {
 
@@ -302,10 +315,10 @@ public class GameManager3 : MonoBehaviour {
 		return new Vector3(x, 0, z);
 	}
 
+	//check your score, and finds the score to the player before you
 	public void checkScore() {
 		if(userID != 0) {
 			int nextScore = 0;
-			bool first = true;
 			position = 0;
 
 			foreach (KeyValuePair<int, GameObject> go in gameObjects) {
