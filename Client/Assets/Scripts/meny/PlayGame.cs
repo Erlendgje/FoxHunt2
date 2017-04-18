@@ -11,6 +11,7 @@ public class PlayGame : MonoBehaviour {
 		//Henter inn hvem karakter man valgte
 		GetComponent<PickPlayerScript>();
 		DontDestroyOnLoad (this);
+
 	}
 	
 	//Starter spillet med karakteren man valgte

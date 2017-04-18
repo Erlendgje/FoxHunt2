@@ -43,6 +43,8 @@ public class PickPlayerScript : MonoBehaviour {
 		Karakterer [Velger].SetActive (false);
 		Velger = valgt;
 		Karakterer [Velger].SetActive (true); 
+
+
 	}
 
 	//Fikk hjelp av Jonas
@@ -50,8 +52,11 @@ public class PickPlayerScript : MonoBehaviour {
 	public void SpillAv()
 	{
 			cName = Karakterer [Velger].name;
+		Debug.Log (cName);
 			PlayGame.LoadLevel (Karakterer [Velger], 1);
-			
+			PlayerPrefs.SetString ("avatar", cName);
+
+
 	}
 
 
