@@ -80,11 +80,12 @@ public class GameManager3 : MonoBehaviour {
 
 				GameObject temp = Instantiate(button, canvas.transform.position, canvas.transform.rotation);
 				temp.transform.SetParent(canvas.transform);
-				temp.GetComponent<RectTransform>().sizeDelta = new Vector2(canvas.GetComponent<RectTransform>().rect.width - 10, 50);
+				temp.GetComponent<RectTransform>().sizeDelta = new Vector2(canvas.GetComponent<RectTransform>().rect.width - 10, canvas.GetComponent<RectTransform>().rect.height * 0.1f);
 				temp.transform.localScale = new Vector3(1, 1, 1);
 				temp.GetComponent<RectTransform>().localPosition = new Vector3(0, ((temp.GetComponent<RectTransform>().rect.height) * (buttonCounter / 2)) - ((temp.GetComponent<RectTransform>().rect.height + 5) * counter), 0);
 
 				temp.GetComponentInChildren<Text>().text = go.Value.GetComponent<GOScript3>().name;
+				temp.GetComponentInChildren<Text>().fontSize = (int) (canvas.GetComponent<RectTransform>().rect.height * 0.1f) + 10;
 				temp.GetComponent<Button>().onClick.AddListener(() => ButtonClick(go.Key));
 
 
