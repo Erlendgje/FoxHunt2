@@ -25,14 +25,24 @@ public class OneTimeScene : MonoBehaviour {
 	
 	}
 
+
+	public void PlayGame(){
+	
+		Application.LoadLevel (1);
+		PlayerPrefs.SetInt ("SavedLevel", 0);
+	
+	}
+
 	void Start(){
-		if (test == true) {
-			PlayerPrefs.SetInt ("SavedLevel", 0);
+		if (levelReached == 0) {
+			LoadScene ();
+
 		 
 		} 
 
-		else if (test == !true) {
-			LoadScene ();
+		else if (levelReached >= 0) {
+			Application.LoadLevel (1);
+
 		}
 			
 	

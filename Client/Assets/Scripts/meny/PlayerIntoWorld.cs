@@ -17,7 +17,7 @@ public class PlayerIntoWorld : MonoBehaviour {
 		DontDestroyOnLoad (this);
 		//Klonen blir generert på satt posisjon
 		//Instantiate(Resources.Load(PickPlayerScript.cName), new Vector3(3f, 23f, 86f), Quaternion.Euler(0f, 90f, 0f));
-		GameObject instance = Instantiate(Resources.Load(PlayerPrefs.GetString ("avatar", PickPlayerScript.cName), typeof(GameObject))) as GameObject;
+		Instantiate(Resources.Load(PlayerPrefs.GetString ("avatar", PickPlayerScript.cName)), new Vector3(3f, 23f, 86f), Quaternion.Euler(0f, 90f, 0f));
 		//PlayerPrefs.GetString ("avatar", PickPlayerScript.cName);
 
 

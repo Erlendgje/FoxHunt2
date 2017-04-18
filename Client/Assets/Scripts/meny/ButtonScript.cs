@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ButtonScript : MonoBehaviour {
 
 	//når spilleren kolliderer med collidern blir han/hun sendt til neste bane, som er Olympus
-	public void Options(){
+	public void StartGame(){
 
 
 		Application.LoadLevel(2);
@@ -20,42 +20,6 @@ public class ButtonScript : MonoBehaviour {
 
 	}
 
-
-	public void BackHome(){
-
-
-		Application.LoadLevel(1);
-
-	}
-
-
-	public void Shop(){
-
-
-		Application.LoadLevel(4);
-
-	}
-
-	public void Foxes(){
-
-
-		Application.LoadLevel(5);
-
-	}
-
-	public void Inventory(){
-
-
-		Application.LoadLevel(3);
-
-	}
-
-	public void PlayGame(){
-
-
-		Application.LoadLevel(0);
-
-	}
 
 
 
