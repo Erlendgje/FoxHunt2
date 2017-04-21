@@ -13,10 +13,10 @@ public class ButtonScript : MonoBehaviour {
 
 	}
 
-	public void Okey(){
+	public void Reset(){
 
 
-		Application.LoadLevel(1);
+		PlayerPrefs.DeleteAll ();
 
 	}
 
