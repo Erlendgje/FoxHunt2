@@ -6,14 +6,19 @@ using UnityEngine.UI;
 public class PickPlayerScript : MonoBehaviour {
 
 	private List<GameObject> Karakterer;
+	public string[] karaktereNavn = { "Baby", "Boy", "Girl"};
 
-	private int Velger = 0;
-
-	public static string cName;
+	public int Velger = 0;
 
 	void Awake()
 	{
-		PlayerPrefs.SetInt ("newGame", 1);
+
+		//PlayerPrefs.DeleteAll();
+		string temp = PlayerPrefs.GetString("avatar");
+
+		if (temp != "") {
+			Application.LoadLevel(1);
+		}
 	}
 
 	//Det blir laget en liste med 3 objekter man kan velge mellom 
@@ -30,38 +35,21 @@ public class PickPlayerScript : MonoBehaviour {
 
 		}
 
-		Karakterer [Velger].SetActive (true);
+		Karakterer[Velger].SetActive (true);
 	}
 
 	public void Velg(int valgt)
 	{
-		if (valgt == Velger)
-			return;
-
-		if(valgt < 0 || valgt >= Karakterer.Count)
-			return;
 		Karakterer [Velger].SetActive (false);
 		Velger = valgt;
 		Karakterer [Velger].SetActive (true); 
-
-
 	}
 
-	//Fikk hjelp av Jonas
-	//Gjør at karakteren blir "lagret" og det blir kloner ut av den i neste bane (Det er objekter i hver bane som henter inn hvem som ble valgt)
-	public void SpillAv()
-	{
-			cName = Karakterer [Velger].name;
-		Debug.Log (cName);
-			PlayGame.LoadLevel (Karakterer [Velger], 1);
-			PlayerPrefs.SetString ("avatar", cName);
-
+	public void PlayGame() {
+		PlayerPrefs.SetString("avatar", karaktereNavn[Velger]);
+		Application.LoadLevel(1);
 
 	}
-
-
-
-
 }
 
 

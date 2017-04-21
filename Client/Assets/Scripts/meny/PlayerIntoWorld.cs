@@ -12,17 +12,14 @@ public class PlayerIntoWorld : MonoBehaviour {
 	//Fikk hjelp av Jonas med Resources funksjonen
 	void Awake ()
 	{	//Henter inn hvem karakter som ble valgt fra PickPlayerScriptet
-		GetComponent<OneTimeScene>();
-		GetComponent<PickPlayerScript>();
 		DontDestroyOnLoad (this);
 		//Klonen blir generert på satt posisjon
 		//Instantiate(Resources.Load(PickPlayerScript.cName), new Vector3(3f, 23f, 86f), Quaternion.Euler(0f, 90f, 0f));
-		Instantiate(Resources.Load(PlayerPrefs.GetString ("avatar", PickPlayerScript.cName)), new Vector3(3f, 23f, 86f), Quaternion.Euler(0f, 90f, 0f));
+		Instantiate(Resources.Load(PlayerPrefs.GetString ("avatar", "")), new Vector3(3f, 23f, 86f), Quaternion.Euler(0f, 90f, 0f));
 		//PlayerPrefs.GetString ("avatar", PickPlayerScript.cName);
 
 
 	}
-
 
 
 
