@@ -9,7 +9,7 @@ public class GOScript3 : MonoBehaviour {
     public decimal lt, ln;
     public int id;
 	public string name;
-    private float speed = 10f;
+    private float speed = 20f;
 	private float rotationSpeed = 5f;
     public int score;
     public GameObject gameManager;
@@ -78,6 +78,15 @@ public class GOScript3 : MonoBehaviour {
 				float rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg - 90;
 
 				if(rotation < 0) {
+					rotation = 360 + rotation;
+				}
+
+				transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, rotation, 0), rotationSpeed);
+			}
+			else if(this.tag == "Hunter") {
+				float rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg + 180;
+
+				if (rotation < 0) {
 					rotation = 360 + rotation;
 				}
 

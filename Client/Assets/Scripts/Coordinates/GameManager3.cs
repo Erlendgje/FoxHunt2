@@ -18,7 +18,7 @@ public class GameManager3 : MonoBehaviour {
     private decimal coordinateMapWidth;
     private float inGameMapHeight;
     private float inGameMapWidth;
-    private float scale;
+	public float scale;
 	public int userID;
 	public int position;
 
@@ -38,6 +38,7 @@ public class GameManager3 : MonoBehaviour {
 	public List<GameObject> buttons;
 	public List<GameObject> prefabs;
 	public Material grass;
+	public GameObject grassPrefab;
 	public Text scoreText;
 	public Text nextScore;
 
@@ -280,6 +281,13 @@ public class GameManager3 : MonoBehaviour {
 		//Checking if randomPosition is inside polygon/map
 		if (!ContainsPoint(PolygonArray, new Vector2(randomX, randomZ))) {
 			Instantiate(prefabs[random], randomPosition, Quaternion.Euler(new Vector3(0, UnityEngine.Random.Range(0, 360), 0)));
+
+			for(int i = 0; i < 3; i++) {
+				float randomXGrass = UnityEngine.Random.Range(tile.transform.position.x - tile.GetComponent<Renderer>().bounds.size.x / 2, tile.transform.position.x + tile.GetComponent<Renderer>().bounds.size.x / 2);
+				float randomZGrass = UnityEngine.Random.Range(tile.transform.position.z - tile.GetComponent<Renderer>().bounds.size.z / 2, tile.transform.position.z + tile.GetComponent<Renderer>().bounds.size.z / 2);
+				randomPosition = new Vector3(randomXGrass, grassPrefab.GetComponent<Renderer>().bounds.size.y / 2, randomZGrass);
+				Instantiate(grassPrefab, randomPosition, Quaternion.Euler(new Vector3(0, UnityEngine.Random.Range(0, 360), 0)));
+			}
 		}
 		else {
 			CreateForest(PolygonArray);
