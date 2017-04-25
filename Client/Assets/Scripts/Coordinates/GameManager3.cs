@@ -11,25 +11,23 @@ public class GameManager3 : MonoBehaviour {
 	//Variables used for game calculations
     public decimal[,] boundary;
     public decimal southernmosttPoint;
-    public decimal northernmostPoint;
-    public decimal westernmostPoint;
-    public decimal easternmostPoint;
-    public decimal coordinateMapHeight;
-    public decimal coordinateMapWidth;
-    public float inGameMapHeight;
-    public float inGameMapWidth;
-    public float scale;
+	public decimal northernmostPoint;
+	public decimal westernmostPoint;
+	public decimal easternmostPoint;
+    private decimal coordinateMapHeight;
+    private decimal coordinateMapWidth;
+    private float inGameMapHeight;
+    private float inGameMapWidth;
+    private float scale;
 	public int userID;
 	public int position;
 
 	//Game settings from server
-    public double catchrange;
-    public bool gps;
-    public bool opponents;
-    public bool points;
-    public bool gameOver;
-
-    
+    private double catchrange;
+    private bool gps;
+    private bool opponents;
+    private bool points;
+    private bool gameOver;
 
     //Objects
     public GameObject serverHandler;
@@ -267,6 +265,7 @@ public class GameManager3 : MonoBehaviour {
 			}
 		}
 	}
+
 	//Creating object randomly outside map
 	public void CreateForest(Vector2[] PolygonArray) {
 

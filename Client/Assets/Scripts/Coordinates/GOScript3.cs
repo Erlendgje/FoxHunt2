@@ -9,7 +9,7 @@ public class GOScript3 : MonoBehaviour {
     public decimal lt, ln;
     public int id;
 	public string name;
-    private float speed = 5f;
+    private float speed = 10f;
 	private float rotationSpeed = 5f;
     public int score;
     public GameObject gameManager;
@@ -27,6 +27,10 @@ public class GOScript3 : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+
+		if(this.tag == "Fox") {
+			speed = 5f;
+		}
 
     }
 
@@ -71,7 +75,7 @@ public class GOScript3 : MonoBehaviour {
 			//Rotating the foxes
 			if (this.CompareTag("Fox")) {
 
-				float rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg + 90;
+				float rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg - 90;
 
 				if(rotation < 0) {
 					rotation = 360 + rotation;
