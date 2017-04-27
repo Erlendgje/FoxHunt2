@@ -46,10 +46,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\AvsluttSpill.cs" />
      <Compile Include="Assets\Fonts\Script\scriptTexttest.cs" />
      <Compile Include="Assets\Scripts\Coordinates\GOScript3.cs" />
      <Compile Include="Assets\Scripts\Coordinates\GameManager3.cs" />
      <Compile Include="Assets\Scripts\Coordinates\GetData3.cs" />
+     <Compile Include="Assets\Scripts\Coordinates\HomeButton.cs" />
      <Compile Include="Assets\Scripts\Coordinates\PlayerText.cs" />
      <Compile Include="Assets\Scripts\Coordinates\ScorePosition.cs" />
      <Compile Include="Assets\Scripts\Coordinates\TextPosition.cs" />

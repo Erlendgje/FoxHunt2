@@ -18,4 +18,11 @@ public class ButtonScript : MonoBehaviour {
 		Application.Quit();
 	}
 
+	public void GoHome() {
+
+		
+		Application.LoadLevel(1);
+
+	}
+
 }
