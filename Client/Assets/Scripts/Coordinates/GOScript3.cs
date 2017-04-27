@@ -9,13 +9,14 @@ public class GOScript3 : MonoBehaviour {
     public decimal lt, ln;
     public int id;
 	public string name;
-    private float speed = 20f;
+    private float speed = 30f;
 	private float rotationSpeed = 5f;
     public int score;
     public GameObject gameManager;
     private GameManager3 gmScript;
     private bool first;
 	public bool taken;
+	private bool isCaught = false;
 
 	//Finding GameManager
     private void Awake() {
@@ -27,11 +28,6 @@ public class GOScript3 : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-
-		if(this.tag == "Fox") {
-			speed = 5f;
-		}
-
     }
 
     // Update is called once per frame
@@ -41,13 +37,37 @@ public class GOScript3 : MonoBehaviour {
 
 	}
 
+	public int counter = 0;
 
 	//Set values and moving the gameobject
-    public void SetValues(decimal lt, decimal ln, int id, int score, string name, bool taken) {
+    public void SetValues(decimal lt, decimal ln, int id, int score, string name, bool taken, bool isCaught) {
 
         this.id = id;
         this.score = score;
 		this.taken = taken;
+
+		if(speed > 30) {
+			counter++;
+
+			if(counter > 24) {
+				speed = 30f;
+				counter = 0;
+			}
+		}
+
+		if (isCaught && !this.isCaught) {
+			this.GetComponent<Animator>().SetBool("caught", isCaught);
+		}
+		else if(!isCaught && this.isCaught) {
+			this.GetComponent<Animator>().SetBool("caught", isCaught);
+			this.speed = 120f;
+		}
+
+		this.isCaught = isCaught;
+
+		if (isCaught) {
+			return;
+		}
 
 		if(this.name == "") {
 			this.name = name;
@@ -70,12 +90,15 @@ public class GOScript3 : MonoBehaviour {
 				transform.position = gmScript.MakeVector((float)ln, (float)lt);
                 first = false;
             }
-            this.GetComponent<Renderer>().enabled = true;
+
+			foreach (Renderer renderer in this.GetComponentsInChildren<Renderer>()) {
+				renderer.enabled = true;
+			}
 
 			//Rotating the foxes
 			if (this.CompareTag("Fox")) {
 
-				float rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg - 90;
+				float rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg + 90;
 
 				if(rotation < 0) {
 					rotation = 360 + rotation;
@@ -98,7 +121,9 @@ public class GOScript3 : MonoBehaviour {
 			
 		}
         else {
-            this.GetComponent<Renderer>().enabled = false;
+			foreach (Renderer renderer in this.GetComponentsInChildren<Renderer>()) {
+				renderer.enabled = false;
+			}
 			first = true;
         }
     }

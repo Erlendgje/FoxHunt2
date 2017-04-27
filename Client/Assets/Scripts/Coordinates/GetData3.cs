@@ -167,6 +167,14 @@ public class GetData3 : MonoBehaviour {
 			bool taken = bool.Parse(gameObject.Attributes["taken"].Value);
 			string name = "";
 			int score = 0;
+			bool isCaught = false;
+
+			try {
+				isCaught = bool.Parse(gameObject.Attributes["iscaught"].Value);
+			}
+			catch {
+
+			}
 			try {
 				score = int.Parse(gameObject.Attributes["caught"].Value);
 			}
@@ -185,7 +193,7 @@ public class GetData3 : MonoBehaviour {
 
             gameManager.GetComponent<GameManager3>().gameObjects.TryGetValue(id, out tempGO);
 
-            tempGO.GetComponent<GOScript3>().SetValues(lt, ln, id, score, name, taken);
+            tempGO.GetComponent<GOScript3>().SetValues(lt, ln, id, score, name, taken, isCaught);
         }
 
 		gameManager.GetComponent<GameManager3>().checkScore();

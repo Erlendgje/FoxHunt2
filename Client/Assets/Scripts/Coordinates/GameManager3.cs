@@ -346,21 +346,22 @@ public class GameManager3 : MonoBehaviour {
 
 			switch (position) {
 				case 0:
+					this.nextScore.text = "1st place";
 					break;
 				case 1:
-					this.nextScore.text = "1st place: " + nextScore;
+					this.nextScore.text = nextScore + " behind 1st place";
 					break;
 				case 2:
-					this.nextScore.text = "2nd place: " + nextScore;
+					this.nextScore.text = nextScore + " behind 2nd place";
 					break;
 				case 3:
-					this.nextScore.text = "3rd place: " + nextScore;
+					this.nextScore.text = nextScore + " behind 3rd place";
 					break;
 				case 4:
-					this.nextScore.text = "4th place: " + nextScore;
+					this.nextScore.text = nextScore + " behind 4th place";
 					break;
 				case 5:
-					this.nextScore.text = "5th place: " + nextScore;
+					this.nextScore.text = nextScore + " behind 5th place";
 					break;
 			}
 		}

@@ -1,0 +1,336 @@
+fileFormatVersion: 2
+guid: 3162b04fa20733149a204191ecef9230
+timeCreated: 1493253853
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: ikHandle1
+    100004: ikHandle2
+    100006: ikHandle4
+    100008: ikHandle5
+    100010: ikHandle6
+    100012: leftBLeg1
+    100014: leftBLeg2
+    100016: leftBLeg3
+    100018: leftBLeg4
+    100020: leftBLeg5
+    100022: leftFLeg1
+    100024: leftFLeg2
+    100026: leftFLeg3
+    100028: Main
+    100030: nurbsCircle1
+    100032: pCube2
+    100034: rightBLeg1
+    100036: rightBLeg2
+    100038: rightBLeg3
+    100040: rightBLeg4
+    100042: rightBLeg5
+    100044: rightFLeg1
+    100046: rightFLeg2
+    100048: rightFLeg3
+    100050: spine1
+    100052: spine2
+    100054: spine3
+    100056: spine4
+    100058: spine5
+    100060: tail1
+    100062: tail2
+    100064: tail3
+    400000: //RootNode
+    400002: ikHandle1
+    400004: ikHandle2
+    400006: ikHandle4
+    400008: ikHandle5
+    400010: ikHandle6
+    400012: leftBLeg1
+    400014: leftBLeg2
+    400016: leftBLeg3
+    400018: leftBLeg4
+    400020: leftBLeg5
+    400022: leftFLeg1
+    400024: leftFLeg2
+    400026: leftFLeg3
+    400028: Main
+    400030: nurbsCircle1
+    400032: pCube2
+    400034: rightBLeg1
+    400036: rightBLeg2
+    400038: rightBLeg3
+    400040: rightBLeg4
+    400042: rightBLeg5
+    400044: rightFLeg1
+    400046: rightFLeg2
+    400048: rightFLeg3
+    400050: spine1
+    400052: spine2
+    400054: spine3
+    400056: spine4
+    400058: spine5
+    400060: tail1
+    400062: tail2
+    400064: tail3
+    4300000: pCube2
+    7400000: Walking
+    7400002: Caught
+    9500000: //RootNode
+    13700000: pCube2
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Walking
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 24
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ikHandle1
+        weight: 1
+      - path: ikHandle2
+        weight: 1
+      - path: ikHandle4
+        weight: 1
+      - path: ikHandle5
+        weight: 1
+      - path: ikHandle6
+        weight: 1
+      - path: Main
+        weight: 1
+      - path: Main/leftBLeg1
+        weight: 1
+      - path: Main/leftBLeg1/leftBLeg2
+        weight: 1
+      - path: Main/leftBLeg1/leftBLeg2/leftBLeg3
+        weight: 1
+      - path: Main/leftBLeg1/leftBLeg2/leftBLeg3/leftBLeg4
+        weight: 1
+      - path: Main/leftBLeg1/leftBLeg2/leftBLeg3/leftBLeg4/leftBLeg5
+        weight: 1
+      - path: Main/rightBLeg1
+        weight: 1
+      - path: Main/rightBLeg1/rightBLeg2
+        weight: 1
+      - path: Main/rightBLeg1/rightBLeg2/rightBLeg3
+        weight: 1
+      - path: Main/rightBLeg1/rightBLeg2/rightBLeg3/rightBLeg4
+        weight: 1
+      - path: Main/rightBLeg1/rightBLeg2/rightBLeg3/rightBLeg4/rightBLeg5
+        weight: 1
+      - path: Main/spine1
+        weight: 1
+      - path: Main/spine1/spine2
+        weight: 1
+      - path: Main/spine1/spine2/leftFLeg1
+        weight: 1
+      - path: Main/spine1/spine2/leftFLeg1/leftFLeg2
+        weight: 1
+      - path: Main/spine1/spine2/leftFLeg1/leftFLeg2/leftFLeg3
+        weight: 1
+      - path: Main/spine1/spine2/rightFLeg1
+        weight: 1
+      - path: Main/spine1/spine2/rightFLeg1/rightFLeg2
+        weight: 1
+      - path: Main/spine1/spine2/rightFLeg1/rightFLeg2/rightFLeg3
+        weight: 1
+      - path: Main/spine1/spine2/spine3
+        weight: 1
+      - path: Main/spine1/spine2/spine3/spine4
+        weight: 1
+      - path: Main/spine1/spine2/spine3/spine4/spine5
+        weight: 1
+      - path: Main/tail1
+        weight: 1
+      - path: Main/tail1/tail2
+        weight: 1
+      - path: Main/tail1/tail2/tail3
+        weight: 1
+      - path: nurbsCircle1
+        weight: 1
+      - path: pCube2
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Caught
+      takeName: Take 001
+      firstFrame: 26
+      lastFrame: 38
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ikHandle1
+        weight: 1
+      - path: ikHandle2
+        weight: 1
+      - path: ikHandle4
+        weight: 1
+      - path: ikHandle5
+        weight: 1
+      - path: ikHandle6
+        weight: 1
+      - path: Main
+        weight: 1
+      - path: Main/leftBLeg1
+        weight: 1
+      - path: Main/leftBLeg1/leftBLeg2
+        weight: 1
+      - path: Main/leftBLeg1/leftBLeg2/leftBLeg3
+        weight: 1
+      - path: Main/leftBLeg1/leftBLeg2/leftBLeg3/leftBLeg4
+        weight: 1
+      - path: Main/leftBLeg1/leftBLeg2/leftBLeg3/leftBLeg4/leftBLeg5
+        weight: 1
+      - path: Main/rightBLeg1
+        weight: 1
+      - path: Main/rightBLeg1/rightBLeg2
+        weight: 1
+      - path: Main/rightBLeg1/rightBLeg2/rightBLeg3
+        weight: 1
+      - path: Main/rightBLeg1/rightBLeg2/rightBLeg3/rightBLeg4
+        weight: 1
+      - path: Main/rightBLeg1/rightBLeg2/rightBLeg3/rightBLeg4/rightBLeg5
+        weight: 1
+      - path: Main/spine1
+        weight: 1
+      - path: Main/spine1/spine2
+        weight: 1
+      - path: Main/spine1/spine2/leftFLeg1
+        weight: 1
+      - path: Main/spine1/spine2/leftFLeg1/leftFLeg2
+        weight: 1
+      - path: Main/spine1/spine2/leftFLeg1/leftFLeg2/leftFLeg3
+        weight: 1
+      - path: Main/spine1/spine2/rightFLeg1
+        weight: 1
+      - path: Main/spine1/spine2/rightFLeg1/rightFLeg2
+        weight: 1
+      - path: Main/spine1/spine2/rightFLeg1/rightFLeg2/rightFLeg3
+        weight: 1
+      - path: Main/spine1/spine2/spine3
+        weight: 1
+      - path: Main/spine1/spine2/spine3/spine4
+        weight: 1
+      - path: Main/spine1/spine2/spine3/spine4/spine5
+        weight: 1
+      - path: Main/tail1
+        weight: 1
+      - path: Main/tail1/tail2
+        weight: 1
+      - path: Main/tail1/tail2/tail3
+        weight: 1
+      - path: nurbsCircle1
+        weight: 1
+      - path: pCube2
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 50
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
