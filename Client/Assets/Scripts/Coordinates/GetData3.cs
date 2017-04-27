@@ -5,7 +5,7 @@ using System.Xml;
 
 public class GetData3 : MonoBehaviour {
 
-    public GameObject spawn, fox, girl, boy, obstacle, gameManager;
+    public GameObject spawn, foxReal, foxFake, girl, boy, obstacle, gameManager;
 	public float lt, ln;
 
 	// Use this for initialization
@@ -98,7 +98,13 @@ public class GetData3 : MonoBehaviour {
 
 			switch (gameObject.Attributes["class"].Value) {
                 case "Fox":
-                    go = Instantiate(fox, spawn.transform.position, spawn.transform.rotation);
+					if (PlayerPrefs.GetString("fox") == "FoxReal") {
+						go = Instantiate(foxReal, spawn.transform.position, spawn.transform.rotation);
+					}
+					else if (PlayerPrefs.GetString("fox") == "FoxFake") {
+						go = Instantiate(foxFake, spawn.transform.position, spawn.transform.rotation);
+					}
+                    
                     break;
                 case "Hunter":
 					if(PlayerPrefs.GetString("avatar", "") == "Girl") {

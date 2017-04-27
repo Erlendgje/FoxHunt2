@@ -88,8 +88,15 @@ public class GOScript3 : MonoBehaviour {
 
 			//Rotating the foxes
 			if (this.CompareTag("Fox")) {
+				float rotation = 0;
 
-				float rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg + 90;
+				if(PlayerPrefs.GetString("fox") == "FoxReal") {
+					rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg + 90;
+				}
+				else if(PlayerPrefs.GetString("fox") == "FoxFake") {
+					rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg - 90;
+				}
+				
 
 				if(rotation < 0) {
 					rotation = 360 + rotation;

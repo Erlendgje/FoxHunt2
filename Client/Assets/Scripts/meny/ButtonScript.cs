@@ -8,7 +8,7 @@ public class ButtonScript : MonoBehaviour {
 	//når spilleren kolliderer med collidern blir han/hun sendt til neste bane, som er Olympus
 	public void StartGame(){
 		Camera.main.GetComponent<AudioSource>().Play();
-		Application.LoadLevel(2);
+		Application.LoadLevel(3);
 
 	}
 
@@ -21,7 +21,7 @@ public class ButtonScript : MonoBehaviour {
 	public void GoHome() {
 
 		
-		Application.LoadLevel(1);
+		Application.LoadLevel(2);
 
 	}
 

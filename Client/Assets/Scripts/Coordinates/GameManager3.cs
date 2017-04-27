@@ -141,7 +141,7 @@ public class GameManager3 : MonoBehaviour {
     void Update() {
 		//moving camera after player
 		try {
-			cam.transform.position = gameObjects[userID].transform.position + new Vector3(-10, 15, 0);
+			cam.transform.position = gameObjects[userID].transform.position + new Vector3(-10, 25, 0);
 		}
 		catch {
 
@@ -212,7 +212,7 @@ public class GameManager3 : MonoBehaviour {
         inGameMapWidth = tile.GetComponent<Renderer>().bounds.size.z;
         tile.transform.position = new Vector3(inGameMapHeight/2, 0, inGameMapWidth/2);
 		//Increasing tile size so camera cant see outside the map
-		tile.transform.localScale = new Vector3(tile.transform.localScale.x + 2, Vector3.one.y, tile.transform.localScale.z + 2);
+		tile.transform.localScale = new Vector3(tile.transform.localScale.x + 4, Vector3.one.y, tile.transform.localScale.z + 4);
 
 		Vector2[] polygonArray = new Vector2[boundary.Length / 2];
 
@@ -337,18 +337,21 @@ public class GameManager3 : MonoBehaviour {
 	public void checkScore() {
 		if(userID != 0) {
 			int nextScore = 0;
+			bool first = true;
 			position = 0;
 
 			foreach (KeyValuePair<int, GameObject> go in gameObjects) {
 				if(go.Value.tag == "Hunter") {
 
 					if (gameObjects[userID].GetComponent<GOScript3>().score < go.Value.GetComponent<GOScript3>().score) {
-						if(nextScore < go.Value.GetComponent<GOScript3>().score) {
+						if (first) {
 							nextScore = go.Value.GetComponent<GOScript3>().score;
 						}
-					}
 
-					if (go.Value.GetComponent<GOScript3>().score > gameObjects[userID].GetComponent<GOScript3>().score) {
+						if(nextScore > go.Value.GetComponent<GOScript3>().score) {
+							nextScore = go.Value.GetComponent<GOScript3>().score;
+						}
+
 						position++;
 					}
 				}

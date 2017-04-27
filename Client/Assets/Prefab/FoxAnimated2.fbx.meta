@@ -1,0 +1,432 @@
+fileFormatVersion: 2
+guid: a84ddc167cba0014ca8490a37c838999
+timeCreated: 1493320878
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: back_left
+    100002: back_left_ik
+    100004: back_right
+    100006: back_right_ik
+    100008: //RootNode
+    100010: front_body
+    100012: front_left
+    100014: front_left_ik
+    100016: front_right
+    100018: front_right_ik
+    100020: head
+    100022: ikHandle1
+    100024: joint10
+    100026: joint11
+    100028: joint12
+    100030: joint18
+    100032: joint19
+    100034: joint20
+    100036: joint22
+    100038: joint23
+    100040: joint24
+    100042: joint25
+    100044: joint27
+    100046: joint28
+    100048: joint29
+    100050: joint30
+    100052: pCone1
+    100054: pCone2
+    100056: pCylinder1
+    100058: pCylinder4
+    100060: pSphere1
+    100062: pSphere12
+    100064: pSphere17
+    100066: pSphere4
+    100068: pSphere5
+    100070: pSphere7
+    100072: pSphere9
+    100074: rig_base
+    100076: tail
+    100078: transform10
+    100080: transform12
+    100082: transform17
+    100084: transform2
+    100086: transform3
+    100088: transform4
+    100090: transform6
+    100092: transform7
+    100094: transform8
+    100096: transform9
+    400000: back_left
+    400002: back_left_ik
+    400004: back_right
+    400006: back_right_ik
+    400008: //RootNode
+    400010: front_body
+    400012: front_left
+    400014: front_left_ik
+    400016: front_right
+    400018: front_right_ik
+    400020: head
+    400022: ikHandle1
+    400024: joint10
+    400026: joint11
+    400028: joint12
+    400030: joint18
+    400032: joint19
+    400034: joint20
+    400036: joint22
+    400038: joint23
+    400040: joint24
+    400042: joint25
+    400044: joint27
+    400046: joint28
+    400048: joint29
+    400050: joint30
+    400052: pCone1
+    400054: pCone2
+    400056: pCylinder1
+    400058: pCylinder4
+    400060: pSphere1
+    400062: pSphere12
+    400064: pSphere17
+    400066: pSphere4
+    400068: pSphere5
+    400070: pSphere7
+    400072: pSphere9
+    400074: rig_base
+    400076: tail
+    400078: transform10
+    400080: transform12
+    400082: transform17
+    400084: transform2
+    400086: transform3
+    400088: transform4
+    400090: transform6
+    400092: transform7
+    400094: transform8
+    400096: transform9
+    4300000: pSphere17
+    7400000: Walking
+    7400002: Caught
+    9500000: //RootNode
+    13700000: pSphere17
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Walking
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back_left_ik
+        weight: 1
+      - path: back_right_ik
+        weight: 1
+      - path: front_left_ik
+        weight: 1
+      - path: front_right_ik
+        weight: 1
+      - path: ikHandle1
+        weight: 1
+      - path: pCone1
+        weight: 1
+      - path: pCone1/transform8
+        weight: 1
+      - path: pCone2
+        weight: 1
+      - path: pCone2/transform7
+        weight: 1
+      - path: pCylinder1
+        weight: 1
+      - path: pCylinder1/transform9
+        weight: 1
+      - path: pCylinder4
+        weight: 1
+      - path: pCylinder4/transform12
+        weight: 1
+      - path: pSphere1
+        weight: 1
+      - path: pSphere1/transform2
+        weight: 1
+      - path: pSphere4
+        weight: 1
+      - path: pSphere4/transform3
+        weight: 1
+      - path: pSphere5
+        weight: 1
+      - path: pSphere5/transform4
+        weight: 1
+      - path: pSphere7
+        weight: 1
+      - path: pSphere7/transform6
+        weight: 1
+      - path: pSphere9
+        weight: 1
+      - path: pSphere9/transform10
+        weight: 1
+      - path: pSphere12
+        weight: 1
+      - path: pSphere12/transform17
+        weight: 1
+      - path: pSphere17
+        weight: 1
+      - path: rig_base
+        weight: 1
+      - path: rig_base/back_left
+        weight: 1
+      - path: rig_base/back_left/joint22
+        weight: 1
+      - path: rig_base/back_left/joint22/joint23
+        weight: 1
+      - path: rig_base/back_left/joint22/joint23/joint24
+        weight: 1
+      - path: rig_base/back_left/joint22/joint23/joint24/joint25
+        weight: 1
+      - path: rig_base/back_right
+        weight: 1
+      - path: rig_base/back_right/joint27
+        weight: 1
+      - path: rig_base/back_right/joint27/joint28
+        weight: 1
+      - path: rig_base/back_right/joint27/joint28/joint29
+        weight: 1
+      - path: rig_base/back_right/joint27/joint28/joint29/joint30
+        weight: 1
+      - path: rig_base/front_body
+        weight: 1
+      - path: rig_base/front_body/front_left
+        weight: 1
+      - path: rig_base/front_body/front_left/joint18
+        weight: 1
+      - path: rig_base/front_body/front_left/joint18/joint19
+        weight: 1
+      - path: rig_base/front_body/front_left/joint18/joint19/joint20
+        weight: 1
+      - path: rig_base/front_body/front_right
+        weight: 1
+      - path: rig_base/front_body/front_right/joint10
+        weight: 1
+      - path: rig_base/front_body/front_right/joint10/joint11
+        weight: 1
+      - path: rig_base/front_body/front_right/joint10/joint11/joint12
+        weight: 1
+      - path: rig_base/front_body/head
+        weight: 1
+      - path: rig_base/tail
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Caught
+      takeName: Take 001
+      firstFrame: 48
+      lastFrame: 86
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back_left_ik
+        weight: 1
+      - path: back_right_ik
+        weight: 1
+      - path: front_left_ik
+        weight: 1
+      - path: front_right_ik
+        weight: 1
+      - path: ikHandle1
+        weight: 1
+      - path: pCone1
+        weight: 1
+      - path: pCone1/transform8
+        weight: 1
+      - path: pCone2
+        weight: 1
+      - path: pCone2/transform7
+        weight: 1
+      - path: pCylinder1
+        weight: 1
+      - path: pCylinder1/transform9
+        weight: 1
+      - path: pCylinder4
+        weight: 1
+      - path: pCylinder4/transform12
+        weight: 1
+      - path: pSphere1
+        weight: 1
+      - path: pSphere1/transform2
+        weight: 1
+      - path: pSphere4
+        weight: 1
+      - path: pSphere4/transform3
+        weight: 1
+      - path: pSphere5
+        weight: 1
+      - path: pSphere5/transform4
+        weight: 1
+      - path: pSphere7
+        weight: 1
+      - path: pSphere7/transform6
+        weight: 1
+      - path: pSphere9
+        weight: 1
+      - path: pSphere9/transform10
+        weight: 1
+      - path: pSphere12
+        weight: 1
+      - path: pSphere12/transform17
+        weight: 1
+      - path: pSphere17
+        weight: 1
+      - path: rig_base
+        weight: 1
+      - path: rig_base/back_left
+        weight: 1
+      - path: rig_base/back_left/joint22
+        weight: 1
+      - path: rig_base/back_left/joint22/joint23
+        weight: 1
+      - path: rig_base/back_left/joint22/joint23/joint24
+        weight: 1
+      - path: rig_base/back_left/joint22/joint23/joint24/joint25
+        weight: 1
+      - path: rig_base/back_right
+        weight: 1
+      - path: rig_base/back_right/joint27
+        weight: 1
+      - path: rig_base/back_right/joint27/joint28
+        weight: 1
+      - path: rig_base/back_right/joint27/joint28/joint29
+        weight: 1
+      - path: rig_base/back_right/joint27/joint28/joint29/joint30
+        weight: 1
+      - path: rig_base/front_body
+        weight: 1
+      - path: rig_base/front_body/front_left
+        weight: 1
+      - path: rig_base/front_body/front_left/joint18
+        weight: 1
+      - path: rig_base/front_body/front_left/joint18/joint19
+        weight: 1
+      - path: rig_base/front_body/front_left/joint18/joint19/joint20
+        weight: 1
+      - path: rig_base/front_body/front_right
+        weight: 1
+      - path: rig_base/front_body/front_right/joint10
+        weight: 1
+      - path: rig_base/front_body/front_right/joint10/joint11
+        weight: 1
+      - path: rig_base/front_body/front_right/joint10/joint11/joint12
+        weight: 1
+      - path: rig_base/front_body/head
+        weight: 1
+      - path: rig_base/tail
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 15
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: rig_base
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

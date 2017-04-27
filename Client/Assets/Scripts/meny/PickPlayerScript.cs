@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PickPlayerScript : MonoBehaviour {
 
 	private List<GameObject> Karakterer;
-	public string[] karaktereNavn = {"Boy", "Girl"};
+	public string[] karaktereNavn = {};
 
 	public int Velger = 0;
 
@@ -14,11 +14,23 @@ public class PickPlayerScript : MonoBehaviour {
 	{
 
 		//PlayerPrefs.DeleteAll();
-		string temp = PlayerPrefs.GetString("avatar");
 
-		if (temp != "") {
-			Application.LoadLevel(1);
+		if(Application.loadedLevel == 0) {
+			string temp = PlayerPrefs.GetString("avatar");
+
+			if (temp != "") {
+				Application.LoadLevel(1);
+			}
 		}
+		else {
+			string temp = PlayerPrefs.GetString("fox");
+			Debug.Log(temp);
+
+			if (temp != "") {
+				Application.LoadLevel(2);
+			}
+		}
+		
 	}
 
 	//Det blir laget en liste med 3 objekter man kan velge mellom 
@@ -49,11 +61,16 @@ public class PickPlayerScript : MonoBehaviour {
 
 	}
 
-	public void PlayGame() {
-		Debug.Log (karaktereNavn[Velger]);
+	public void PickAvatar() {
+		Debug.Log(karaktereNavn[Velger]);
 		PlayerPrefs.SetString("avatar", karaktereNavn[Velger]);
 		Application.LoadLevel(1);
+	}
 
+	public void PlayGame() {
+		Debug.Log(karaktereNavn[Velger]);
+		PlayerPrefs.SetString("fox", karaktereNavn[Velger]);
+		Application.LoadLevel(2);
 	}
 }
 
