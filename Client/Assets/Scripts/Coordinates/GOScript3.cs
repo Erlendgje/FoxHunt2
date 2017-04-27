@@ -9,7 +9,7 @@ public class GOScript3 : MonoBehaviour {
     public decimal lt, ln;
     public int id;
 	public string name;
-    private float speed = 30f;
+    private float speed = 20f;
 	private float rotationSpeed = 5f;
     public int score;
     public GameObject gameManager;
@@ -37,8 +37,6 @@ public class GOScript3 : MonoBehaviour {
 
 	}
 
-	public int counter = 0;
-
 	//Set values and moving the gameobject
     public void SetValues(decimal lt, decimal ln, int id, int score, string name, bool taken, bool isCaught) {
 
@@ -46,21 +44,11 @@ public class GOScript3 : MonoBehaviour {
         this.score = score;
 		this.taken = taken;
 
-		if(speed > 30) {
-			counter++;
-
-			if(counter > 24) {
-				speed = 30f;
-				counter = 0;
-			}
-		}
-
 		if (isCaught && !this.isCaught) {
 			this.GetComponent<Animator>().SetBool("caught", isCaught);
 		}
 		else if(!isCaught && this.isCaught) {
 			this.GetComponent<Animator>().SetBool("caught", isCaught);
-			this.speed = 120f;
 		}
 
 		this.isCaught = isCaught;
