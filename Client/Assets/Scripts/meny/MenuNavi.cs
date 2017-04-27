@@ -34,7 +34,7 @@ public class MenuNavi : MonoBehaviour {
 		} else if (menueTransform.tag == "items" || menueTransform.tag == "rever") {
 			speed = 3f;
 		}
-		Debug.Log (speed);
+		Camera.main.GetComponent<AudioSource>().Play();
 		cameraLookAt = menueTransform.transform;
 	}
 

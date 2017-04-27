@@ -20,8 +20,8 @@ public class VolumeManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-	music.volume = Volume.value;
-	PlayerPrefs.SetFloat ("music", Volume.value);
+		music.volume = Volume.value;
+		PlayerPrefs.SetFloat ("music", Volume.value);
 	}
 		
 

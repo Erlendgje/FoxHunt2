@@ -91,7 +91,7 @@ public class GameManager3 : MonoBehaviour {
 				//Checks if player is available
 				if (go.Value.GetComponent<GOScript3>().taken == true) {
 					temp.GetComponent<Button>().interactable = false;
-					temp.GetComponentInChildren<Animation>().enabled = false;
+					temp.GetComponentInChildren<Animator>().enabled = false;
 					temp.GetComponentInChildren<Animator>().enabled = false;
 				}
 
@@ -104,7 +104,7 @@ public class GameManager3 : MonoBehaviour {
 
 	void ButtonClick(int id) {
 		this.userID = id;
-
+		canvas.GetComponent<AudioSource>().Play();
 		foreach (GameObject go in buttons) {
 			Destroy(go);
 		}
@@ -349,19 +349,16 @@ public class GameManager3 : MonoBehaviour {
 					this.nextScore.text = "1st place";
 					break;
 				case 1:
-					this.nextScore.text = nextScore + " behind 1st place";
+					this.nextScore.text =  "1st place: " + nextScore;
 					break;
 				case 2:
-					this.nextScore.text = nextScore + " behind 2nd place";
+					this.nextScore.text = "2nd place: " + nextScore;
 					break;
 				case 3:
-					this.nextScore.text = nextScore + " behind 3rd place";
+					this.nextScore.text = "3rd place: " + nextScore;
 					break;
 				case 4:
-					this.nextScore.text = nextScore + " behind 4th place";
-					break;
-				case 5:
-					this.nextScore.text = nextScore + " behind 5th place";
+					this.nextScore.text = "4th place: " + nextScore;
 					break;
 			}
 		}

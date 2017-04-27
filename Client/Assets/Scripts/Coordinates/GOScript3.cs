@@ -9,14 +9,15 @@ public class GOScript3 : MonoBehaviour {
     public decimal lt, ln;
     public int id;
 	public string name;
-    private float speed = 20f;
+    private float speed = 30f;
 	private float rotationSpeed = 5f;
-    public int score;
+    public int score = 0;
     public GameObject gameManager;
     private GameManager3 gmScript;
     private bool first;
 	public bool taken;
 	private bool isCaught = false;
+	private Vector3 lastPosition;
 
 	//Finding GameManager
     private void Awake() {
@@ -32,15 +33,16 @@ public class GOScript3 : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
-		
-
 	}
 
 	//Set values and moving the gameobject
     public void SetValues(decimal lt, decimal ln, int id, int score, string name, bool taken, bool isCaught) {
 
         this.id = id;
+		if(this.score != score && id == gameManager.GetComponent<GameManager3>().userID) {
+			this.GetComponent<AudioSource>().Play();
+		}
+
         this.score = score;
 		this.taken = taken;
 
@@ -48,6 +50,7 @@ public class GOScript3 : MonoBehaviour {
 			this.GetComponent<Animator>().SetBool("caught", isCaught);
 		}
 		else if(!isCaught && this.isCaught) {
+			this.transform.position = gmScript.MakeVector((float)ln, (float)lt);
 			this.GetComponent<Animator>().SetBool("caught", isCaught);
 		}
 
@@ -104,9 +107,17 @@ public class GOScript3 : MonoBehaviour {
 				transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, rotation, 0), rotationSpeed);
 			}
 
+			Vector3 displacement = temp - this.transform.position;
 
-			transform.position = Vector3.MoveTowards(transform.position, temp, speed * Time.deltaTime);
-			
+			if(transform.position.x != temp.x || transform.position.z != temp.z) {
+				transform.position = Vector3.MoveTowards(transform.position, temp, speed * Time.deltaTime);
+				if(this.tag == "Hunter") {
+					this.GetComponent<Animator>().SetBool("moving", true);
+				}
+			}
+			else if(this.tag == "Hunter") {
+				this.GetComponent<Animator>().SetBool("moving", false);
+			}
 		}
         else {
 			foreach (Renderer renderer in this.GetComponentsInChildren<Renderer>()) {

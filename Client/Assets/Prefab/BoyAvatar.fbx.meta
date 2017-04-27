@@ -1,0 +1,348 @@
+fileFormatVersion: 2
+guid: 1c644d005ac4d4745b5825657f4421fa
+timeCreated: 1493291581
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: arm
+    100002: arm2
+    100004: arm3
+    100006: arm_left
+    100008: arm_right
+    100010: body2
+    100012: //RootNode
+    100014: ikHandle1
+    100016: joint10
+    100018: joint11
+    100020: joint12
+    100022: joint13
+    100024: joint14
+    100026: joint15
+    100028: joint16
+    100030: joint17
+    100032: joint18
+    100034: joint21
+    100036: joint22
+    100038: joint23
+    100040: joint24
+    100042: joint25
+    100044: joint26
+    100046: joint27
+    100048: joint5
+    100050: joint6
+    100052: joint7
+    100054: leg
+    100056: leg2
+    100058: leg4
+    100060: leg_left
+    100062: leg_right
+    100064: transform1
+    100066: transform4
+    100068: transform5
+    400000: arm
+    400002: arm2
+    400004: arm3
+    400006: arm_left
+    400008: arm_right
+    400010: body2
+    400012: //RootNode
+    400014: ikHandle1
+    400016: joint10
+    400018: joint11
+    400020: joint12
+    400022: joint13
+    400024: joint14
+    400026: joint15
+    400028: joint16
+    400030: joint17
+    400032: joint18
+    400034: joint21
+    400036: joint22
+    400038: joint23
+    400040: joint24
+    400042: joint25
+    400044: joint26
+    400046: joint27
+    400048: joint5
+    400050: joint6
+    400052: joint7
+    400054: leg
+    400056: leg2
+    400058: leg4
+    400060: leg_left
+    400062: leg_right
+    400064: transform1
+    400066: transform4
+    400068: transform5
+    4300000: body2
+    7400000: Walking
+    7400002: Idle
+    9500000: //RootNode
+    13700000: body2
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Walking
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 36
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: arm2
+        weight: 1
+      - path: arm2/transform1
+        weight: 1
+      - path: arm_left
+        weight: 1
+      - path: arm_right
+        weight: 1
+      - path: body2
+        weight: 1
+      - path: ikHandle1
+        weight: 1
+      - path: joint13
+        weight: 1
+      - path: joint13/joint14
+        weight: 1
+      - path: joint13/joint14/joint15
+        weight: 1
+      - path: joint13/joint14/joint15/joint16
+        weight: 1
+      - path: joint13/joint14/joint15/joint16/joint17
+        weight: 1
+      - path: joint13/joint14/joint15/joint18
+        weight: 1
+      - path: joint13/joint14/joint15/joint18/arm
+        weight: 1
+      - path: joint13/joint14/joint15/joint18/arm/joint5
+        weight: 1
+      - path: joint13/joint14/joint15/joint18/arm/joint5/joint6
+        weight: 1
+      - path: joint13/joint14/joint15/joint18/arm/joint5/joint6/joint7
+        weight: 1
+      - path: joint13/joint14/joint15/joint21
+        weight: 1
+      - path: joint13/joint14/joint15/joint21/arm3
+        weight: 1
+      - path: joint13/joint14/joint15/joint21/arm3/joint22
+        weight: 1
+      - path: joint13/joint14/joint15/joint21/arm3/joint22/joint23
+        weight: 1
+      - path: joint13/joint14/joint15/joint21/arm3/joint22/joint23/joint24
+        weight: 1
+      - path: joint13/transform5
+        weight: 1
+      - path: joint13/transform5/leg
+        weight: 1
+      - path: joint13/transform5/leg/joint10
+        weight: 1
+      - path: joint13/transform5/leg/joint10/joint11
+        weight: 1
+      - path: joint13/transform5/leg/joint10/joint11/joint12
+        weight: 1
+      - path: joint13/transform5/leg4
+        weight: 1
+      - path: joint13/transform5/leg4/joint25
+        weight: 1
+      - path: joint13/transform5/leg4/joint25/joint26
+        weight: 1
+      - path: joint13/transform5/leg4/joint25/joint26/joint27
+        weight: 1
+      - path: leg2
+        weight: 1
+      - path: leg2/transform4
+        weight: 1
+      - path: leg_left
+        weight: 1
+      - path: leg_right
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 40
+      lastFrame: 73
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: arm2
+        weight: 1
+      - path: arm2/transform1
+        weight: 1
+      - path: arm_left
+        weight: 1
+      - path: arm_right
+        weight: 1
+      - path: body2
+        weight: 1
+      - path: ikHandle1
+        weight: 1
+      - path: joint13
+        weight: 1
+      - path: joint13/joint14
+        weight: 1
+      - path: joint13/joint14/joint15
+        weight: 1
+      - path: joint13/joint14/joint15/joint16
+        weight: 1
+      - path: joint13/joint14/joint15/joint16/joint17
+        weight: 1
+      - path: joint13/joint14/joint15/joint18
+        weight: 1
+      - path: joint13/joint14/joint15/joint18/arm
+        weight: 1
+      - path: joint13/joint14/joint15/joint18/arm/joint5
+        weight: 1
+      - path: joint13/joint14/joint15/joint18/arm/joint5/joint6
+        weight: 1
+      - path: joint13/joint14/joint15/joint18/arm/joint5/joint6/joint7
+        weight: 1
+      - path: joint13/joint14/joint15/joint21
+        weight: 1
+      - path: joint13/joint14/joint15/joint21/arm3
+        weight: 1
+      - path: joint13/joint14/joint15/joint21/arm3/joint22
+        weight: 1
+      - path: joint13/joint14/joint15/joint21/arm3/joint22/joint23
+        weight: 1
+      - path: joint13/joint14/joint15/joint21/arm3/joint22/joint23/joint24
+        weight: 1
+      - path: joint13/transform5
+        weight: 1
+      - path: joint13/transform5/leg
+        weight: 1
+      - path: joint13/transform5/leg/joint10
+        weight: 1
+      - path: joint13/transform5/leg/joint10/joint11
+        weight: 1
+      - path: joint13/transform5/leg/joint10/joint11/joint12
+        weight: 1
+      - path: joint13/transform5/leg4
+        weight: 1
+      - path: joint13/transform5/leg4/joint25
+        weight: 1
+      - path: joint13/transform5/leg4/joint25/joint26
+        weight: 1
+      - path: joint13/transform5/leg4/joint25/joint26/joint27
+        weight: 1
+      - path: leg2
+        weight: 1
+      - path: leg2/transform4
+        weight: 1
+      - path: leg_left
+        weight: 1
+      - path: leg_right
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 60
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: joint13
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

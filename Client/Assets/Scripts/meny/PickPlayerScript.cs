@@ -40,6 +40,9 @@ public class PickPlayerScript : MonoBehaviour {
 
 	public void Velg(int valgt)
 	{
+
+		Camera.main.GetComponent<AudioSource>().Play();
+		
 		Karakterer [Velger].SetActive (false);
 		Velger = valgt;
 		Karakterer [Velger].SetActive (true); 
