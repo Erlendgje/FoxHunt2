@@ -64,7 +64,7 @@ public class GOScript3 : MonoBehaviour {
 			this.name = name;
 		}
 
-		if (this.CompareTag("Hunter") && first == false)
+		if (this.CompareTag("Hunter"))
         {
 			gmScript.UpdateScore(id, score, this.name);
         }
