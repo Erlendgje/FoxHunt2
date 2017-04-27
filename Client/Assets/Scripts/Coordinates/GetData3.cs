@@ -5,7 +5,7 @@ using System.Xml;
 
 public class GetData3 : MonoBehaviour {
 
-    public GameObject spawn, fox, hunter, obstacle, gameManager;
+    public GameObject spawn, fox, girl, boy, obstacle, gameManager;
 	public float lt, ln;
 
 	// Use this for initialization
@@ -94,19 +94,27 @@ public class GetData3 : MonoBehaviour {
         foreach (XmlNode gameObject in gameObjects) {
 
 
-            switch (gameObject.Attributes["class"].Value) {
+			int id = int.Parse(gameObject.Attributes["id"].Value);
+
+			switch (gameObject.Attributes["class"].Value) {
                 case "Fox":
                     go = Instantiate(fox, spawn.transform.position, spawn.transform.rotation);
                     break;
                 case "Hunter":
-                    go = Instantiate(hunter, spawn.transform.position, spawn.transform.rotation);
+					if(PlayerPrefs.GetString("avatar", "") == "Girl") {
+						go = Instantiate(boy, spawn.transform.position, spawn.transform.rotation);
+					}
+					else if(PlayerPrefs.GetString("avatar", "") == "Boy") {
+						go = Instantiate(girl, spawn.transform.position, spawn.transform.rotation);
+					}
+                    
                     break;
                 case "Obstacle":
                     go = Instantiate(obstacle, spawn.transform.position, spawn.transform.rotation);
                     break;
             }
 
-            int id = int.Parse(gameObject.Attributes["id"].Value);
+            
             gameManager.GetComponent<GameManager3>().gameObjects.Add(id, go);
         }
 

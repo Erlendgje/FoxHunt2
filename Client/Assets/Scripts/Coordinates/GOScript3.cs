@@ -98,7 +98,25 @@ public class GOScript3 : MonoBehaviour {
 				transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, rotation, 0), rotationSpeed);
 			}
 			else if(this.tag == "Hunter") {
-				float rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg + 180;
+				float rotation = 0;
+
+				if (this.id != gameManager.GetComponent<GameManager3>().userID) {
+					if (PlayerPrefs.GetString("avatar") == "Boy") {
+						rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg + 180;
+					}
+					else {
+						rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg + 90;
+					}
+						
+				}
+				else {
+					if (PlayerPrefs.GetString("avatar") == "Boy") {
+						rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg + 90;
+					}
+					else {
+						rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg + 180;
+					}
+				}
 
 				if (rotation < 0) {
 					rotation = 360 + rotation;
@@ -106,8 +124,6 @@ public class GOScript3 : MonoBehaviour {
 
 				transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, rotation, 0), rotationSpeed);
 			}
-
-			Vector3 displacement = temp - this.transform.position;
 
 			if(transform.position.x != temp.x || transform.position.z != temp.z) {
 				transform.position = Vector3.MoveTowards(transform.position, temp, speed * Time.deltaTime);

@@ -104,6 +104,16 @@ public class GameManager3 : MonoBehaviour {
 
 	void ButtonClick(int id) {
 		this.userID = id;
+		Destroy(gameObjects[id]);
+		if(PlayerPrefs.GetString("avatar") == "Boy") {
+			gameObjects[id] = Instantiate(serverHandler.GetComponent<GetData3>().boy, serverHandler.GetComponent<GetData3>().spawn.transform.position, serverHandler.GetComponent<GetData3>().spawn.transform.rotation);
+
+		}
+		else if(PlayerPrefs.GetString("avatar") == "Girl") {
+			gameObjects[id] = Instantiate(serverHandler.GetComponent<GetData3>().girl, serverHandler.GetComponent<GetData3>().spawn.transform.position, serverHandler.GetComponent<GetData3>().spawn.transform.rotation);
+
+		}
+
 		canvas.GetComponent<AudioSource>().Play();
 		foreach (GameObject go in buttons) {
 			Destroy(go);
