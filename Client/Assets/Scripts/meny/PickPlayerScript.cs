@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PickPlayerScript : MonoBehaviour {
 
 	private List<GameObject> Karakterer;
-	public string[] karaktereNavn = { "Baby", "Boy", "Girl"};
+	public string[] karaktereNavn = {"Boy", "Girl"};
 
 	public int Velger = 0;
 
@@ -46,9 +46,11 @@ public class PickPlayerScript : MonoBehaviour {
 		Karakterer [Velger].SetActive (false);
 		Velger = valgt;
 		Karakterer [Velger].SetActive (true); 
+
 	}
 
 	public void PlayGame() {
+		Debug.Log (karaktereNavn[Velger]);
 		PlayerPrefs.SetString("avatar", karaktereNavn[Velger]);
 		Application.LoadLevel(1);
 
