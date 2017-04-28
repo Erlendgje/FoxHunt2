@@ -20,7 +20,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 6}
-  m_MinSize: {x: 950, y: 542}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -42,8 +42,8 @@ MonoBehaviour:
     y: 30
     width: 1536
     height: 731
-  m_MinSize: {x: 681, y: 492}
-  m_MaxSize: {x: 14002, y: 14042}
+  m_MinSize: {x: 683, y: 492}
+  m_MaxSize: {x: 14004, y: 14042}
   vertical: 0
   controlID: 9
 --- !u!114 &3
@@ -64,8 +64,8 @@ MonoBehaviour:
     y: 0
     width: 311
     height: 731
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 277, y: 71}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -324,19 +324,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets
+    - Assets/Scenes/Meny
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Assets/Scenes/Meny
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Erlend\Documents\FoxHunt\Client
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 95}
-    m_SelectedIDs: d62d0000
-    m_LastClickedID: 11734
-    m_ExpandedIDs: 00000000d62d0000662e0000f62e00001c2f0000b82f000010300000723000008230000042310000a0310000163200002635000000ca9a3bffffff7f
+    m_SelectedIDs: 46260000
+    m_LastClickedID: 9798
+    m_ExpandedIDs: 00000000b425000048260000c2270000282800006c290000182a0000082e00000a2e00000c2e00000e2e0000102e0000122e000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -364,7 +364,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000d62d0000662e0000f62e0000b82f0000103000008230000042310000a03100001632000026350000
+    m_ExpandedIDs: 00000000b425000048260000c2270000282800006c290000182a0000082e00000a2e00000c2e00000e2e0000102e0000122e0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -480,9 +480,9 @@ MonoBehaviour:
     height: 404
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: b2c0fefff4ebfeff1012ffff101bffff021effff5c62ffffce72ffffde83fffff0e6ffff00000000aa5e0000d65e00003470000060700000a0700000cc700000
+    m_SelectedIDs: 463a0000
+    m_LastClickedID: 14918
+    m_ExpandedIDs: 26dcffff74e6ffffd0fbffff000000005e3b0000823c0000b83c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -501,7 +501,7 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 0}
     m_SearchString: 
   m_ExpandedScenes:
-  - Coordinates
+  - _newMeny
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting
@@ -562,13 +562,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: 0.26796994, y: 0.68719393, z: -0.3059015, w: 0.6019797}
+    m_Target: {x: 0.23288324, y: -0.13283862, z: 0.032130294, w: 0.9628526}
     speed: 2
-    m_Value: {x: 0.26797011, y: 0.6871944, z: -0.3059017, w: 0.6019801}
+    m_Value: {x: 0.23288347, y: -0.13283876, z: 0.032130323, w: 0.9628535}
   m_Size:
-    m_Target: 16.064302
+    m_Target: 1111.8771
     speed: 2
-    m_Value: 16.064302
+    m_Value: 1111.8771
   m_Ortho:
     m_Target: 0
     speed: 2
