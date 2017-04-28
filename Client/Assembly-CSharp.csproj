@@ -66,11 +66,17 @@
      <Compile Include="Assets\Scripts\TileMap\GameManager2.cs" />
      <Compile Include="Assets\Scripts\TileMap\GetData2.cs" />
      <Compile Include="Assets\Scripts\TileMap\TileManager2.cs" />
+     <Compile Include="Assets\Scripts\meny\BackHome.cs" />
      <Compile Include="Assets\Scripts\meny\ButtonScript.cs" />
+     <Compile Include="Assets\Scripts\meny\CameraScript.cs" />
+     <Compile Include="Assets\Scripts\meny\Items.cs" />
      <Compile Include="Assets\Scripts\meny\ItemsInfo.cs" />
+     <Compile Include="Assets\Scripts\meny\Kamera.cs" />
      <Compile Include="Assets\Scripts\meny\MenuNavi.cs" />
      <Compile Include="Assets\Scripts\meny\Merknapp.cs" />
+     <Compile Include="Assets\Scripts\meny\OptionsButton.cs" />
      <Compile Include="Assets\Scripts\meny\PickPlayerScript.cs" />
+     <Compile Include="Assets\Scripts\meny\PlayGame.cs" />
      <Compile Include="Assets\Scripts\meny\PlayerIntoWorld.cs" />
      <Compile Include="Assets\Scripts\meny\PlayerManager.cs" />
      <Compile Include="Assets\Scripts\meny\VolumeManager.cs" />
@@ -78,6 +84,7 @@
      <Compile Include="Assets\Scripts\meny\lightSlider.cs" />
      <Compile Include="Assets\Scripts\meny\rotate.cs" />
      <None Include="Assets\Fonts\Documentation\JazzCreateBubble_VersionHistory_1.1.txt" />
+     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
      <None Include="Assets\Fonts\Documentation\JazzCreateAltKeys_BubbleFont.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
