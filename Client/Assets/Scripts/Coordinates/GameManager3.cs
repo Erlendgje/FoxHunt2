@@ -84,7 +84,7 @@ public class GameManager3 : MonoBehaviour {
 				temp.GetComponent<RectTransform>().localPosition = new Vector3(0, ((temp.GetComponent<RectTransform>().rect.height) * (buttonCounter / 2)) - ((temp.GetComponent<RectTransform>().rect.height + 5) * counter), 0);
 
 				temp.GetComponentInChildren<Text>().text = go.Value.GetComponent<GOScript3>().name;
-				temp.GetComponentInChildren<Text>().fontSize = (int) (canvas.GetComponent<RectTransform>().rect.height * 0.1f) + 10;
+				temp.GetComponentInChildren<Text>().fontSize = (int) (canvas.GetComponent<RectTransform>().rect.height * 0.1f);
 				temp.GetComponent<Button>().onClick.AddListener(() => ButtonClick(go.Key));
 
 
