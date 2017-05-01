@@ -12,8 +12,6 @@ public class lightSlider : MonoBehaviour {
 
 
 	void Awake(){
-	
-
 
 
 
