@@ -261,15 +261,15 @@ public class GameManager3 : MonoBehaviour {
 				float y = 0;
 
 				if (corner1.x > corner2.x) {
-					x = corner1.x - differenceX * k + (UnityEngine.Random.Range(-0.2f, 0.2f));
+					x = corner1.x - differenceX * k;
 				}else {
-					x = corner1.x + differenceX * k + (UnityEngine.Random.Range(-0.2f, 0.2f));
+					x = corner1.x + differenceX * k;
 				}
 
 				if(corner1.z > corner2.z) {
-					y = corner1.z - differenceY * k + (UnityEngine.Random.Range(-0.5f, 0.5f));
+					y = corner1.z - differenceY * k;
 				}else {
-					y = corner1.z + differenceY * k + (UnityEngine.Random.Range(-0.5f, 0.5f));
+					y = corner1.z + differenceY * k;
 				}
 
 				int random = UnityEngine.Random.Range(0, prefabs.Count);
