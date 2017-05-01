@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class GOScript3 : MonoBehaviour {
 
 	//Settings for the gameobject
-    public decimal lt, ln;
+    public float lt, ln;
     public int id;
 	public string name;
-    private float speed = 30f;
+    private float speed;
 	private float rotationSpeed = 5f;
     public int score = 0;
     public GameObject gameManager;
@@ -35,8 +35,10 @@ public class GOScript3 : MonoBehaviour {
     void Update() {
 	}
 
+	
+
 	//Set values and moving the gameobject
-    public void SetValues(decimal lt, decimal ln, int id, int score, string name, bool taken, bool isCaught) {
+    public void SetValues(float lt, float ln, int id, int score, string name, bool taken, bool isCaught) {
 
         this.id = id;
 		if(this.score != score && id == gameManager.GetComponent<GameManager3>().userID) {
@@ -69,18 +71,24 @@ public class GOScript3 : MonoBehaviour {
 			gmScript.UpdateScore(id, score, this.name);
         }
 
+		if(this.id != gameManager.GetComponent<GameManager3>().userID) {
+			MovePlayer(lt, ln, 0);
+		}
+	}
+
+	public void MovePlayer(float lt, float ln, float rotation) {
 		//Checking if object is located on the field irl
 		if (lt < gmScript.northernmostPoint && lt > gmScript.southernmosttPoint && ln < gmScript.easternmostPoint && ln > gmScript.westernmostPoint) {
 
 			this.lt = lt;
-            this.ln = ln;
+			this.ln = ln;
 
 			Vector3 temp = gmScript.MakeVector((float)ln, (float)lt);
 			//If its first time to enter field, teleport object to position
 			if (first == true) {
 				transform.position = gmScript.MakeVector((float)ln, (float)lt);
-                first = false;
-            }
+				first = false;
+			}
 
 			foreach (Renderer renderer in this.GetComponentsInChildren<Renderer>()) {
 				renderer.enabled = true;
@@ -88,24 +96,22 @@ public class GOScript3 : MonoBehaviour {
 
 			//Rotating the foxes
 			if (this.CompareTag("Fox")) {
-				float rotation = 0;
 
-				if(PlayerPrefs.GetString("fox") == "FoxReal") {
+				if (PlayerPrefs.GetString("fox") == "FoxReal") {
 					rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg + 90;
 				}
-				else if(PlayerPrefs.GetString("fox") == "FoxFake") {
+				else if (PlayerPrefs.GetString("fox") == "FoxFake") {
 					rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg - 90;
 				}
-				
 
-				if(rotation < 0) {
+
+				if (rotation < 0) {
 					rotation = 360 + rotation;
 				}
 
 				transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, rotation, 0), rotationSpeed);
 			}
-			else if(this.tag == "Hunter") {
-				float rotation = 0;
+			else if (this.tag == "Hunter") {
 
 				if (this.id != gameManager.GetComponent<GameManager3>().userID) {
 					if (PlayerPrefs.GetString("avatar") == "Boy") {
@@ -114,14 +120,13 @@ public class GOScript3 : MonoBehaviour {
 					else {
 						rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg + 90;
 					}
-						
+
 				}
 				else {
-					if (PlayerPrefs.GetString("avatar") == "Boy") {
-						rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg + 90;
-					}
-					else {
-						rotation = Mathf.Atan2(transform.position.x - temp.x, transform.position.z - temp.z) * Mathf.Rad2Deg + 180;
+					if(this.id == gameManager.GetComponent<GameManager3>().userID) {
+						if (PlayerPrefs.GetString("avatar") == "Girl") {
+							rotation += 90;
+						}
 					}
 				}
 
@@ -132,23 +137,26 @@ public class GOScript3 : MonoBehaviour {
 				transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, rotation, 0), rotationSpeed);
 			}
 
-			if(transform.position.x != temp.x || transform.position.z != temp.z) {
+			if ((transform.position.x != temp.x || transform.position.z != temp.z)) {
+
+				speed = Vector3.Distance(transform.position, temp) / 0.2f;
+
 				transform.position = Vector3.MoveTowards(transform.position, temp, speed * Time.deltaTime);
-				if(this.tag == "Hunter") {
+				if (this.tag == "Hunter") {
 					this.GetComponent<Animator>().SetBool("moving", true);
 				}
 			}
-			else if(this.tag == "Hunter") {
+			else if (this.tag == "Hunter") {
 				this.GetComponent<Animator>().SetBool("moving", false);
 			}
 		}
-        else {
+		else {
 			foreach (Renderer renderer in this.GetComponentsInChildren<Renderer>()) {
 				renderer.enabled = false;
 			}
 			first = true;
-        }
-    }
+		}
+	}
 
-    
+
 }

@@ -17,7 +17,7 @@ public class lightSlider : MonoBehaviour {
 
 
 	void Start(){
-		Debug.Log("kjører");
+
 		DontDestroyOnLoad(gameObject);
 
 		mainSlider.value = PlayerPrefs.GetFloat ("light", mainSlider.value);

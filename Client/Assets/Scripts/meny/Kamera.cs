@@ -13,8 +13,9 @@ public class Kamera : MonoBehaviour {
 	public AspectRatioFitter fit;
 
 
-	private void Start(){
-	
+
+	void Start(){
+
 		defaultBackground = background.texture;
 		WebCamDevice[] devices = WebCamTexture.devices;
 
@@ -42,7 +43,7 @@ public class Kamera : MonoBehaviour {
 		camAvacile = true;
 	}
 
-	private void Update(){
+	void Update(){
 	
 		if (!camAvacile)
 			return;

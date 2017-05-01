@@ -9,13 +9,13 @@ using System.IO;
 public class GameManager3 : MonoBehaviour {
 
 	//Variables used for game calculations
-    public decimal[,] boundary;
-    public decimal southernmosttPoint;
-	public decimal northernmostPoint;
-	public decimal westernmostPoint;
-	public decimal easternmostPoint;
-    private decimal coordinateMapHeight;
-    private decimal coordinateMapWidth;
+    public float[,] boundary;
+    public float southernmosttPoint;
+	public float northernmostPoint;
+	public float westernmostPoint;
+	public float easternmostPoint;
+    private float coordinateMapHeight;
+    private float coordinateMapWidth;
     private float inGameMapHeight;
     private float inGameMapWidth;
 	public float scale;
@@ -51,8 +51,8 @@ public class GameManager3 : MonoBehaviour {
         gameObjects = new Dictionary<int, GameObject>();
         scores = new Dictionary<int, TextMesh>();
         //Getting server settings and starting constant update
-        serverHandler.GetComponent<GetData3>().getConfig();
-        serverHandler.GetComponent<GetData3>().startUpdate();
+        serverHandler.GetComponent<GetData3>().GetConfig();
+        serverHandler.GetComponent<GetData3>().StartUpdate();
 
 		createButtons();
     }
@@ -115,9 +115,16 @@ public class GameManager3 : MonoBehaviour {
 		}
 
 		canvas.GetComponent<AudioSource>().Play();
+
 		foreach (GameObject go in buttons) {
 			Destroy(go);
 		}
+
+		InvokeRepeating("UpdatePosition", 0f, 0.05f);
+	}
+
+	public void UpdatePosition() {
+		gameObjects[userID].GetComponent<GOScript3>().MovePlayer(serverHandler.GetComponent<GetData3>().GetLat(), serverHandler.GetComponent<GetData3>().GetLon(), serverHandler.GetComponent<GetData3>().GetRoration());
 	}
 
 	//Checks the players available
@@ -166,7 +173,7 @@ public class GameManager3 : MonoBehaviour {
 		}
     }
 
-    public void SetSettings(decimal[,] boundary, double catchrange, bool gps, bool opponents, bool points) {
+    public void SetSettings(float[,] boundary, double catchrange, bool gps, bool opponents, bool points) {
         this.boundary = boundary;
         this.catchrange = catchrange;
         this.gps = gps;

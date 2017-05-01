@@ -16,7 +16,8 @@ public class GetData3 : MonoBehaviour {
 			yield return new WaitForSeconds(1f);
 		}
 
-		Input.location.Start(10f, 5f);
+		Input.location.Start(1f, 0.5f);
+		Input.compass.enabled = true;
 
 		//Trying to connect to gps service
 		int maxWait = 20;
@@ -47,7 +48,19 @@ public class GetData3 : MonoBehaviour {
 		yield return StartCoroutine(Start());
 	}
 
-	public void getConfig() {
+	public float GetLat() {
+		return Input.location.lastData.latitude;
+	}
+
+	public float GetLon() {
+		return Input.location.lastData.longitude;
+	}
+
+	public float GetRoration() {
+		return Input.compass.trueHeading;
+	}
+
+	public void GetConfig() {
 
 		//string url = "http://asia.hiof.no/foxhunt-servlet/getConfig";
 
@@ -63,11 +76,11 @@ public class GetData3 : MonoBehaviour {
 
         //Getting map area
         XmlNodeList pointList = xmlData.GetElementsByTagName("point");
-        decimal[,] boundary = new decimal[2, 4];
+        float[,] boundary = new float[2, 4];
         int i = 0;
         foreach (XmlNode point in pointList) {
-            boundary[0, i] = decimal.Parse(point.Attributes["lat"].Value);
-            boundary[1, i] = decimal.Parse(point.Attributes["lon"].Value);
+            boundary[0, i] = float.Parse(point.Attributes["lat"].Value);
+            boundary[1, i] = float.Parse(point.Attributes["lon"].Value);
             i++;
         }
 
@@ -128,18 +141,23 @@ public class GetData3 : MonoBehaviour {
     }
 
 	//Starting update to/from server each 0.2 sec
-	public void startUpdate() {
-		InvokeRepeating("getState", 0f, 0.2f);
+	public void StartUpdate() {
+		InvokeRepeating("GetState", 0f, 0.1f);
 	}
 
-
-
 	//Getting info from server about the games flow.
-    public void getState() {
+    public void GetState() {
 
-		lt = Input.location.lastData.latitude;
-		ln = Input.location.lastData.longitude;
-		string url = "http://asia.hiof.no/foxhunt-servlet/getState?userid=" + gameManager.GetComponent<GameManager3>().userID + "&lat=" + lt + "&lon=" + ln;
+		string url = "http://asia.hiof.no/foxhunt-servlet/getState";
+
+		if (gameManager.GetComponent<GameManager3>().userID != 0) {
+
+			lt = Input.location.lastData.latitude;
+			ln = Input.location.lastData.longitude;
+
+			url = "http://asia.hiof.no/foxhunt-servlet/getState?userid=" + gameManager.GetComponent<GameManager3>().userID + "&lat=" + lt + "&lon=" + ln;
+		}
+		
 		//string url = "http://localhost:8080/getState?userid=" + gameManager.GetComponent<GameManager3>().userID + "&lat=" + lt + "&lon=" + ln;
 		XmlDocument xmlData = new XmlDocument();
         xmlData.Load(url);
@@ -175,8 +193,8 @@ public class GetData3 : MonoBehaviour {
 		//Getting value from XMLNode and set the value in GOScript
 		foreach (XmlNode gameObject in gameObjects) {
 
-			decimal ln = decimal.Parse(gameObject.Attributes["ln"].Value);
-			decimal lt = decimal.Parse(gameObject.Attributes["lt"].Value);
+			float ln = float.Parse(gameObject.Attributes["ln"].Value);
+			float lt = float.Parse(gameObject.Attributes["lt"].Value);
 			int id = int.Parse(gameObject.Attributes["id"].Value);
 			bool taken = bool.Parse(gameObject.Attributes["taken"].Value);
 			string name = "";
@@ -213,4 +231,10 @@ public class GetData3 : MonoBehaviour {
 		gameManager.GetComponent<GameManager3>().checkScore();
 
     }
+
+
+	private void OnApplicationQuit() {
+		Input.location.Stop();
+		Input.compass.enabled = false;
+	}
 }

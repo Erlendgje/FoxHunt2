@@ -24,7 +24,6 @@ public class PickPlayerScript : MonoBehaviour {
 		}
 		else {
 			string temp = PlayerPrefs.GetString("fox");
-			Debug.Log(temp);
 
 			if (temp != "") {
 				Application.LoadLevel(2);
