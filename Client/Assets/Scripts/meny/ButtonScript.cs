@@ -14,6 +14,7 @@ public class ButtonScript : MonoBehaviour {
 		Camera.main.GetComponent<AudioSource>().Play();
 		Application.LoadLevel(3);
 
+
 	}
 
 	public void Reset(){
