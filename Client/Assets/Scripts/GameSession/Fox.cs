@@ -16,13 +16,11 @@ public class Fox : GObject {
 		
 	}
 
-	public void SetFoxValues(float lat, float lon, int id, bool isCaught) {
+	public void SetFoxValues(float lat, float lon, int id) {
 		SetObjectValue(lat, lon, id);
-		this.isCaught = isCaught;
-		SetPosition(lat, lon);
 	}
 
-	public void MoveFox(float lat, float lon, bool isCaught) {
+	public void UpdateFox(float lat, float lon, bool isCaught) {
 		if (isCaught && !this.isCaught) {
 			this.GetComponent<Animator>().SetBool("caught", isCaught);
 		}
@@ -30,5 +28,22 @@ public class Fox : GObject {
 			SetPosition(lat, lon);
 			this.GetComponent<Animator>().SetBool("caught", isCaught);
 		}
+
+		this.isCaught = isCaught;
+
+		MoveToPosition(lat, lon);
+
+		if (PlayerPrefs.GetString("fox") == "FoxReal") {
+			SetRotation(Mathf.Atan2(transform.position.x - GetNextPosition().x, transform.position.z - GetNextPosition().z) * Mathf.Rad2Deg + 90);
+		}
+		else if (PlayerPrefs.GetString("fox") == "FoxFake") {
+			SetRotation(Mathf.Atan2(transform.position.x - GetNextPosition().x, transform.position.z - GetNextPosition().z) * Mathf.Rad2Deg - 90); 
+		}
+
+		if (GetRotation() < 0) {
+			SetRotation(360 + GetRotation());
+		}
+
+		transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, GetRotation(), 0), GetRotationSpeed());
 	}
 }
