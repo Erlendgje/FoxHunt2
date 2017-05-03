@@ -7,7 +7,7 @@ public class Hunter : GObject {
 	private bool taken;
 	private int score;
 	private string name;
-	private bool outSide;
+	private bool outSide = true;
 
 	public static int userID = 0;
 
@@ -39,6 +39,7 @@ public class Hunter : GObject {
 		if(CreateVector3.ContainsPoint(CreateVector3.boundary, new Vector2(lon, lat))) {
 
 			if(outSide) {
+				SetPosition(lat, lon);
 				foreach(Renderer renderer in this.GetComponentsInChildren<Renderer>()) {
 					renderer.enabled = true;
 				}
@@ -62,14 +63,18 @@ public class Hunter : GObject {
 				transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, GetRotation(), 0), GetRotationSpeed());
 			}
 		}
-		else if(!outSide) {
-			foreach (Renderer renderer in this.GetComponentsInChildren<Renderer>()) {
-				renderer.enabled = false;
+		else {
+			if (!outSide) {
+				foreach (Renderer renderer in this.GetComponentsInChildren<Renderer>()) {
+					renderer.enabled = false;
+				}
 			}
+			outSide = true;
 		}
 	}
 
 	public void UpdateUser(float lat, float lon, float rotaiton) {
+
 		if (CreateVector3.ContainsPoint(CreateVector3.boundary, new Vector2(lon, lat))) {
 			MoveToPosition(lat, lon);
 		}

@@ -7,7 +7,6 @@ public class ButtonScript : MonoBehaviour {
 
 
 	public GameObject yesNo;
-	public GameObject gameManager;
 
 	//når spilleren kolliderer med collidern blir han/hun sendt til neste bane, som er Olympus
 	public void StartGame(){
@@ -25,7 +24,7 @@ public class ButtonScript : MonoBehaviour {
 
 	public void GoHome() {
 
-		if(gameManager.GetComponent<GameManager3>().userID == 0) {
+		if(Hunter.userID == 0) {
 			Application.LoadLevel(2);
 		}
 		else {
@@ -37,6 +36,7 @@ public class ButtonScript : MonoBehaviour {
 	}
 
 	public void Yes() {
+		Hunter.userID = 0;
 		Application.LoadLevel(2);
 	}
 

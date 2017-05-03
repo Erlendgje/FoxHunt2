@@ -6,6 +6,7 @@ using System.Xml;
 public class ServerHandler : MonoBehaviour {
 
 	private float lt, ln;
+	XmlDocument xmlData;
 
 	// Use this for initialization
 	IEnumerator Start() {
@@ -60,9 +61,6 @@ public class ServerHandler : MonoBehaviour {
 	}
 
 	public XmlDocument GetConfig() {
-
-		lt = Input.location.lastData.latitude;
-		ln = Input.location.lastData.longitude;
 		string url = "http://asia.hiof.no/foxhunt-servlet/getConfig";
 
 		XmlDocument xmlData = new XmlDocument();

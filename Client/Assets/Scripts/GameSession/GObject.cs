@@ -37,29 +37,27 @@ public class GObject : MonoBehaviour {
 
 	public void MoveToPosition(float lat, float lon) {
 
-		this.lat = lat;
-		this.lon = lon;
-
 		nextPosition = CreateVector3.MakeVector(lon, lat);
 
-		if ((transform.position.x != nextPosition.x || transform.position.z != nextPosition.z)) {
-
-			if(id == Hunter.userID) {
-				speed = Vector3.Distance(transform.position, nextPosition) / 0.1f;
-			}
-			else {
-				speed = Vector3.Distance(transform.position, nextPosition) / 0.2f;
-			}
-			
-
-			transform.position = Vector3.MoveTowards(transform.position, nextPosition, speed * Time.deltaTime);
-			if (this.tag == "Hunter") {
-				this.GetComponent<Animator>().SetBool("moving", true);
-			}
+		if (id == Hunter.userID) {
+			speed = Vector3.Distance(transform.position, nextPosition) / 0.05f;
 		}
-		else if (this.tag == "Hunter") {
+		else {
+			speed = Vector3.Distance(transform.position, nextPosition) / 0.1f;
+		}
+
+		transform.position = Vector3.MoveTowards(transform.position, nextPosition, speed * Time.deltaTime);
+
+		if (((transform.position.x - nextPosition.x > 0.1 && transform.position.x - nextPosition.x < -0.1) || (transform.position.z - nextPosition.z > 0.1 || transform.position.z - nextPosition.z < -0.1)) && this.tag == "Hunter" && this.GetComponent<Animator>().GetBool("moving") == false) {
+			Debug.Log(transform.position.x - nextPosition.x);
+			this.GetComponent<Animator>().SetBool("moving", true);
+		}
+		else if (this.tag == "Hunter" && this.GetComponent<Animator>().GetBool("moving") == true) {
 			this.GetComponent<Animator>().SetBool("moving", false);
 		}
+
+		this.lat = lat;
+		this.lon = lon;
 
 	}
 
