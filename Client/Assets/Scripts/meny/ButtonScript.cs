@@ -8,19 +8,22 @@ public class ButtonScript : MonoBehaviour {
 
 	public GameObject yesNo;
 
-	//når spilleren kolliderer med collidern blir han/hun sendt til neste bane, som er Olympus
+	//The player are sent to the next scene
+	//The sound on the button is played of when pushed
 	public void StartGame(){
 		Camera.main.GetComponent<AudioSource>().Play();
 		Application.LoadLevel(3);
 
 
 	}
-
+	//All the playerprefs in the game get deleleted
+	//The sound on the button is played of when pushed
 	public void Reset(){
 		Camera.main.GetComponent<AudioSource>().Play();
 		PlayerPrefs.DeleteAll ();
 		Application.Quit();
 	}
+
 
 	public void GoHome() {
 

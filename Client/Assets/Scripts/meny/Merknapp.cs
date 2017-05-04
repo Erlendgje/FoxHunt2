@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class Merknapp : MonoBehaviour {
 
+	//Public gameobject that holds a panel
 	public GameObject MerKnapp;
+
+	//When pushed the panel become active or deactive 
 	public void Openmeny () {
 
 		MerKnapp.SetActive (!MerKnapp.activeSelf);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+
 }
