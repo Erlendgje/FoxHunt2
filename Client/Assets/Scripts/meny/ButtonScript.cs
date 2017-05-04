@@ -7,25 +7,27 @@ public class ButtonScript : MonoBehaviour {
 
 
 	public GameObject yesNo;
-	public GameObject gameManager;
 
-	//når spilleren kolliderer med collidern blir han/hun sendt til neste bane, som er Olympus
+	//The player are sent to the next scene
+	//The sound on the button is played of when clicked
 	public void StartGame(){
 		Camera.main.GetComponent<AudioSource>().Play();
 		Application.LoadLevel(3);
 
 
 	}
-
+	//All the playerprefs in the game get deleleted
+	//The sound on the button is played of when clicked
 	public void Reset(){
 		Camera.main.GetComponent<AudioSource>().Play();
 		PlayerPrefs.DeleteAll ();
 		Application.Quit();
 	}
 
+
 	public void GoHome() {
 
-		if(gameManager.GetComponent<GameManager3>().userID == 0) {
+		if(Hunter.userID == 0) {
 			Application.LoadLevel(2);
 		}
 		else {
@@ -37,6 +39,7 @@ public class ButtonScript : MonoBehaviour {
 	}
 
 	public void Yes() {
+		Hunter.userID = 0;
 		Application.LoadLevel(2);
 	}
 

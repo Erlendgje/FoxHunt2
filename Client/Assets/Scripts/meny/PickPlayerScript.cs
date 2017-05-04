@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 public class PickPlayerScript : MonoBehaviour {
 
-	private List<GameObject> Karakterer;
-	public string[] karaktereNavn = {};
 
+	//A list that holds all the avatars
+	private List<GameObject> Karakterer;
+	//A string that holds all the avatar names
+	public string[] karaktereNavn = {};
+	//A int that holds the avatar
 	public int Velger = 0;
 
 	void Awake()
@@ -37,15 +40,16 @@ public class PickPlayerScript : MonoBehaviour {
 	//mens de andre blir satt til deaktive.
 
 	private void Start()
-	{
+	{//Karakterer is the list that holds all the avatars
 		Karakterer = new List<GameObject> ();
 		foreach (Transform t in transform) 
 		{
+			//The gameobjects that are the avatars er set to deactive
 			Karakterer.Add(t.gameObject);
 			t.gameObject.SetActive(false);
 
 		}
-
+		//the avatar that is picked is aktive, this will always start with the avatar that have the int 0
 		Karakterer[Velger].SetActive (true);
 	}
 
@@ -59,13 +63,14 @@ public class PickPlayerScript : MonoBehaviour {
 		Karakterer [Velger].SetActive (true); 
 
 	}
-
+	//load the game and saves the avtar that is picked 
 	public void PickAvatar() {
 		Debug.Log(karaktereNavn[Velger]);
 		PlayerPrefs.SetString("avatar", karaktereNavn[Velger]);
 		Application.LoadLevel(1);
 	}
 
+	//load the game and saves the fox that is picked 
 	public void PlayGame() {
 		Debug.Log(karaktereNavn[Velger]);
 		PlayerPrefs.SetString("fox", karaktereNavn[Velger]);

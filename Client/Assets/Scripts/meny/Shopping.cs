@@ -20,6 +20,9 @@ public class Shopping : MonoBehaviour {
 	public Text meditekst;
 
 
+
+	//This is just for show, it dosent really do anything beside deducting ints when a button is pushed
+	//All the functions are placed on the items buttons in the shop
 	void Start ()
 	{
 		money = 100;
@@ -61,6 +64,7 @@ public class Shopping : MonoBehaviour {
 
 	}
 
+	//It gets the public text and ads the new int value of the object 
 	void UpdateScore ()
 	{
 		moneyText.text = "Penger: " + money;

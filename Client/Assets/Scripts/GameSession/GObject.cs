@@ -39,7 +39,6 @@ public class GObject : MonoBehaviour {
 
 	//Moves object from current position to target position
 	public void MoveToPosition(float lat, float lon) {
-
 		this.lat = lat;
 		this.lon = lon;
 
@@ -68,6 +67,9 @@ public class GObject : MonoBehaviour {
 		else if (this.tag == "Hunter") {
 			this.GetComponent<Animator>().SetBool("moving", false);
 		}
+
+		this.lat = lat;
+		this.lon = lon;
 
 	}
 

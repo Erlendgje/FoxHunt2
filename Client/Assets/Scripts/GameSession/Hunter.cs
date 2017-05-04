@@ -8,7 +8,7 @@ public class Hunter : GObject {
 	private bool taken;
 	private int score;
 	private string name;
-	private bool outSide;
+	private bool outSide = true;
 
 	public static int userID = 0;
 
@@ -40,12 +40,13 @@ public class Hunter : GObject {
 		this.score = score;
 
 		//Hunter will not move if he/her is outside the map area.
-		if(CreateVector3.ContainsPoint(CreateVector3.boundary, new Vector2(lon, lat))) {
+		if (CreateVector3.ContainsPoint(CreateVector3.boundary, new Vector2(lon, lat))) {
 
 			//Is only running one time player get back inside the map area. 
-			if(outSide) {
+			if (outSide) {
 				//Setting the hunter visible
-				foreach(Renderer renderer in this.GetComponentsInChildren<Renderer>()) {
+				SetPosition(lat, lon);
+				foreach (Renderer renderer in this.GetComponentsInChildren<Renderer>()) {
 					renderer.enabled = true;
 				}
 				outSide = false;
@@ -66,16 +67,19 @@ public class Hunter : GObject {
 				transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, GetRotation(), 0), GetRotationSpeed());
 			}
 		}
+
 		//Only turn hunter invisible one time if he/her is outside map area
-		else if(!outSide) {
+		else if (!outSide) {
 			foreach (Renderer renderer in this.GetComponentsInChildren<Renderer>()) {
 				renderer.enabled = false;
+				outSide = true;
 			}
 		}
 	}
 
 	//Function to update player position
 	public void UpdateUser(float lat, float lon, float rotaiton) {
+
 		if (CreateVector3.ContainsPoint(CreateVector3.boundary, new Vector2(lon, lat))) {
 			MoveToPosition(lat, lon);
 		}

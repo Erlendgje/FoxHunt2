@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
 
 	//Game settings from server
 	private double catchrange;
-	private bool gps, opponents, points, gameOver;
+	private bool gps, opponents, points, gameOver, first;
 
 	//Objects
 	private ServerHandler serverHandler;
@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
+		first = true;
 		gameObjects = new Dictionary<int, GameObject>();
 		scores = new Dictionary<int, TextMesh>();
 		serverHandler = this.GetComponent<ServerHandler>();
@@ -252,10 +253,14 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-	//Updating gameobjects
+	//Getting data from server
 	public void UpdateGameObjects() {
-
-		//Getting data from server
+		
+		if (first && Hunter.userID != 0) {
+			UpdateScore(Hunter.userID, 0, gameObjects[Hunter.userID].GetComponent<Hunter>().GetName());
+			checkScore();
+			first = false;
+		}
 		XmlDocument xmlData = serverHandler.GetState();
 
 		XmlNodeList objectList = xmlData.GetElementsByTagName("gameObject");
@@ -289,7 +294,9 @@ public class GameManager : MonoBehaviour {
 				int score = 0;
 
 				try {
+
 					score = int.Parse(gObject.Attributes["score"].Value);
+
 					//Only updating score if something have changes
 					if(gameObjects[id].GetComponent<Hunter>().GetScore() != score) {
 						UpdateScore(id, score, gameObjects[id].GetComponent<Hunter>().GetName());
@@ -369,6 +376,7 @@ public class GameManager : MonoBehaviour {
 		Destroy(gameObjects[id]);
 		if (PlayerPrefs.GetString("avatar") == "Boy") {
 			gameObjects[id] = Instantiate(boy, this.transform.position, this.transform.rotation);
+			gameObjects[id].GetComponent<Hunter>().SetPosition(serverHandler.GetLat(), serverHandler.GetLon());
 
 		}
 		else if (PlayerPrefs.GetString("avatar") == "Girl") {

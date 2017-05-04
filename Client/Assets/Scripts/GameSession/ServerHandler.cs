@@ -6,6 +6,7 @@ using System.Xml;
 public class ServerHandler : MonoBehaviour {
 
 	private float lat, lon;
+	XmlDocument xmlData;
 
 	// Use this for initialization
 	IEnumerator Start() {

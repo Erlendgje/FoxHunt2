@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class audiomanager : MonoBehaviour {
 
-	// Use this for initialization
+	//Drags the gameobject white the music on into the next scene
 	void Start () {
 
 		DontDestroyOnLoad (gameObject);
 	}
 	
-	// Update is called once per frame
+
 	void Update () {
 		
 	}

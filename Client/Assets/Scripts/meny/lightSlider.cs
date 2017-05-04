@@ -5,22 +5,18 @@ using UnityEngine.UI;
 
 public class lightSlider : MonoBehaviour {
 
-	public Slider mainSlider;
-	float brightNess = 0.5f;
 
+	//Public slider that holds the slider you want to respond 
+	public Slider mainSlider;
+
+	//Holds the light in the gamescene
 	public Light lys;
 
-
-	void Awake(){
-
-
-
-	}
 
 
 	void Start(){
 		
-
+		//Loads the light settings in the game 
 		DontDestroyOnLoad (gameObject);
 		mainSlider.value = PlayerPrefs.GetFloat ("light", mainSlider.value);
 
@@ -29,8 +25,9 @@ public class lightSlider : MonoBehaviour {
 
 	public void Lightsetting()
 	{
+		//Changes the intensity of the light based on the sliders value
 		lys.intensity = mainSlider.value;
-		//RenderSettings.ambientLight = new Color (brightNess, brightNess, brightNess, 1);
+		//saves the light intensity 
 		PlayerPrefs.SetFloat ("light", mainSlider.value);
 
 
