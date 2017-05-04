@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
 	
 	//Score position, example first place
 	private int position = 0;
+
 	public float scale;
 	private float fenceDistance = 3;
 
@@ -295,7 +296,7 @@ public class GameManager : MonoBehaviour {
 
 				try {
 
-					score = int.Parse(gObject.Attributes["score"].Value);
+					score = int.Parse(gObject.Attributes["caught"].Value);
 
 					//Only updating score if something have changes
 					if(gameObjects[id].GetComponent<Hunter>().GetScore() != score) {

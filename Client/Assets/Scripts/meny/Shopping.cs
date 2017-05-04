@@ -67,10 +67,10 @@ public class Shopping : MonoBehaviour {
 	//It gets the public text and ads the new int value of the object 
 	void UpdateScore ()
 	{
-		moneyText.text = "Penger: " + money;
-		candytekst.text = "Du har: " + candy;
-		berrytekst.text = "Du har: " + berry;
-		meditekst.text = "Du har: " + medi;
-		appletekst.text = "Du har: " + apple;
+		moneyText.text = "Gold: " + money;
+		candytekst.text = "You have: " + candy;
+		berrytekst.text = "You have: " + berry;
+		meditekst.text = "You have: " + medi;
+		appletekst.text = "You have: " + apple;
 	}
 }
