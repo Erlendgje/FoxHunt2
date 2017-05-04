@@ -5,7 +5,7 @@ using System.Xml;
 
 public class ServerHandler : MonoBehaviour {
 
-	private float lt, ln;
+	private float lat, lon;
 
 	// Use this for initialization
 	IEnumerator Start() {
@@ -34,8 +34,8 @@ public class ServerHandler : MonoBehaviour {
 			yield break;
 		}
 		else {
-			lt = Input.location.lastData.latitude;
-			ln = Input.location.lastData.longitude;
+			lat = Input.location.lastData.latitude;
+			lon = Input.location.lastData.longitude;
 		}
 
 		//Check if gps is on
@@ -47,22 +47,24 @@ public class ServerHandler : MonoBehaviour {
 		yield return StartCoroutine(Start());
 	}
 
+	//Returns latitude
 	public float GetLat() {
 		return Input.location.lastData.latitude;
 	}
 
+	//Returns longitude
 	public float GetLon() {
 		return Input.location.lastData.longitude;
 	}
 
+	//Returns heading from compass
 	public float GetRoration() {
 		return Input.compass.trueHeading;
 	}
 
+	//Returns xmlData recived from server
 	public XmlDocument GetConfig() {
 
-		lt = Input.location.lastData.latitude;
-		ln = Input.location.lastData.longitude;
 		string url = "http://asia.hiof.no/foxhunt-servlet/getConfig";
 
 		XmlDocument xmlData = new XmlDocument();
@@ -72,11 +74,12 @@ public class ServerHandler : MonoBehaviour {
 	}
 
 
-	//Getting info from server about the games flow.
+	//Returning data recived from server about the game flow and sending information to server about the players location 
 	public XmlDocument GetState() {
 
 		string url = "http://asia.hiof.no/foxhunt-servlet/getState";
 
+		//Not sending information to server if user is still picking hunter
 		if (Hunter.userID != 0) {
 			url = "http://asia.hiof.no/foxhunt-servlet/getState?userid=" + Hunter.userID + "&lat=" + GetLat() + "&lon=" + GetLon();
 		}
@@ -87,7 +90,7 @@ public class ServerHandler : MonoBehaviour {
 		return xmlData;
 	}
 
-
+	//Stopping all services
 	private void OnApplicationQuit() {
 		Input.location.Stop();
 		Input.compass.enabled = false;
